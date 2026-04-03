@@ -14,11 +14,11 @@ import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
-export const LoginDialog = ({
+export const SignupDialog = ({
   open,
   onOpenChange,
   onSubmit,
-  onSignupClick,
+  onLoginClick,
 }) => {
   const [visible, setVisible] = useState(false);
   return (
@@ -41,12 +41,22 @@ export const LoginDialog = ({
             </Field>
 
             <Field>
+              <Label htmlFor="name-1">Name:</Label>
+              <Input id="name-1" name="name" type="text" />
+            </Field>
+
+            <Field>
               <Label htmlFor="password-1">Password:</Label>
+              <Input id="password-1" name="password" type="password" />
+            </Field>
+
+            <Field>
+              <Label htmlFor="confirm-password-1">Confirm Password:</Label>
 
               <div className="relative">
                 <Input
-                  id="password-1"
-                  name="password"
+                  id="confirm-password-1"
+                  name="confirmPassword"
                   type={visible ? 'text' : 'password'}
                   className="pr-10" // space for icon
                 />
@@ -74,16 +84,16 @@ export const LoginDialog = ({
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">Login</Button>
+            <Button type="submit">Signup</Button>
           </DialogFooter>
         </form>
         <p className="text-center text-sm text-gray-500">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <span
-            onClick={onSignupClick}
+            onClick={onLoginClick}
             className="text-indigo-600 hover:underline cursor-pointer"
           >
-            Sign up
+            Login
           </span>
         </p>
       </DialogContent>

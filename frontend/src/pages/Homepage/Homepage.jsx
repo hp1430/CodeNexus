@@ -1,4 +1,4 @@
-import { LoginDialog } from '@/components/atoms/LoginDialog/LoginDialog';
+import { LoginDialog } from '@/components/molecules/LoginDialog/LoginDialog';
 import CTA from '@/components/organisms/Homepage/CtaSection/CtaSection';
 import Features from '@/components/organisms/Homepage/FeaturesSection/FeaturesSection';
 import Hero from '@/components/organisms/Homepage/HeroSection/HeroSection';

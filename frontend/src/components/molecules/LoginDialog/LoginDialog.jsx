@@ -78,7 +78,7 @@ export const LoginDialog = ({
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" className="cursor-pointer" >
+            <Button type="submit" className="cursor-pointer">
               Login
             </Button>
           </DialogFooter>

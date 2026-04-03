@@ -11,8 +11,10 @@ export default function Hero() {
       </p>
 
       <div className="mt-8 flex justify-center gap-4">
-        <Button>Start Interview</Button>
-        <Button className="bg-gray-200 text-black">Join Room</Button>
+        <Button className="cursor-pointer">Start Interview</Button>
+        <Button className="bg-gray-200 text-black cursor-pointer">
+          Join Room
+        </Button>
       </div>
     </section>
   );

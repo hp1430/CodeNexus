@@ -70,11 +70,17 @@ export const LoginDialog = ({
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button
+                type="button"
+                variant="outline"
+                className="cursor-pointer"
+              >
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">Login</Button>
+            <Button type="submit" className="cursor-pointer" >
+              Login
+            </Button>
           </DialogFooter>
         </form>
         <p className="text-center text-sm text-gray-500">

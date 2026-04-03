@@ -1,7 +1,8 @@
-export default function Button({ children, className, ...props }) {
+export default function Button({ children, className, onClick, ...props }) {
   return (
     <button
       className={`px-6 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition ${className}`}
+      onClick={onClick}
       {...props}
     >
       {children}

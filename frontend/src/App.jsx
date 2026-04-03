@@ -1,10 +1,11 @@
 import './App.css';
 import HomePage from './pages/Homepage/Homepage';
+import { HomepageWrapper } from './pages/Homepage/HomepageWrapper';
 
 function App() {
   return (
     <>
-      <HomePage />
+      <HomepageWrapper />
     </>
   );
 }

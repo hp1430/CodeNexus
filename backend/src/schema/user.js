@@ -27,12 +27,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   const user = this;
   const salt = bcrypt.genSaltSync(11);
   const hasedPassword = bcrypt.hashSync(user.password, salt);
   user.password = hasedPassword;
-  next();
 });
 
 const User = mongoose.model('User', userSchema);

@@ -11,14 +11,21 @@ import {
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, LucideLoader2, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
 
 export const SignupDialog = ({
   open,
   onOpenChange,
   onSubmit,
   onLoginClick,
+  signupForm,
+  setSignupForm,
+  validationError,
+  error,
+  isSuccess,
+  isPending,
 }) => {
   const [visible, setVisible] = useState(false);
   return (
@@ -34,20 +41,68 @@ export const SignupDialog = ({
 
           <br />
 
+          {validationError && (
+            <div className="bg-destructive/15 p-4 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+              <TriangleAlert className="size-5" />
+              <p>{validationError.message}</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="bg-destructive/15 p-4 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+              <TriangleAlert className="size-5" />
+              <p>{error.message}</p>
+            </div>
+          )}
+
+          {isSuccess && (
+            <div className="bg-primary/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-primary mb-5">
+              <FaCheck className="size-5" />
+              <p>
+                Successfully signed up. Verify your email id on next page.
+                <LucideLoader2 className="animate-spin ml-2" />
+              </p>
+            </div>
+          )}
+
           <FieldGroup>
             <Field>
               <Label htmlFor="email-1">Email:</Label>
-              <Input id="email-1" name="email" type="email" />
+              <Input
+                id="email-1"
+                name="email"
+                type="email"
+                disabled={isPending}
+                onChange={(e) =>
+                  setSignupForm({ ...signupForm, email: e.target.value })
+                }
+              />
             </Field>
 
             <Field>
               <Label htmlFor="name-1">Name:</Label>
-              <Input id="name-1" name="name" type="text" />
+              <Input
+                id="name-1"
+                name="name"
+                type="text"
+                disabled={isPending}
+                onChange={(e) =>
+                  setSignupForm({ ...signupForm, name: e.target.value })
+                }
+              />
             </Field>
 
             <Field>
               <Label htmlFor="password-1">Password:</Label>
-              <Input id="password-1" name="password" type="password" />
+              <Input
+                id="password-1"
+                name="password"
+                type="password"
+                disabled={isPending}
+                onChange={(e) =>
+                  setSignupForm({ ...signupForm, password: e.target.value })
+                }
+              />
             </Field>
 
             <Field>
@@ -59,6 +114,13 @@ export const SignupDialog = ({
                   name="confirmPassword"
                   type={visible ? 'text' : 'password'}
                   className="pr-10" // space for icon
+                  disabled={isPending}
+                  onChange={(e) =>
+                    setSignupForm({
+                      ...signupForm,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                 />
 
                 {visible ? (
@@ -84,11 +146,16 @@ export const SignupDialog = ({
                 type="button"
                 variant="outline"
                 className="cursor-pointer"
+                disabled={isPending}
               >
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" className="cursor-pointer">
+            <Button
+              type="submit"
+              className="cursor-pointer"
+              disabled={isPending}
+            >
               Signup
             </Button>
           </DialogFooter>

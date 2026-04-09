@@ -1,5 +1,5 @@
 import { LoginDialog } from '@/components/molecules/LoginDialog/LoginDialog';
-import { SignupDialog } from '@/components/molecules/SignupDialog/SignupDialog';
+import { SignupDialogContainer } from '@/components/molecules/SignupDialog/SignupDialogContainer';
 import CTA from '@/components/organisms/Homepage/CtaSection/CtaSection';
 import Features from '@/components/organisms/Homepage/FeaturesSection/FeaturesSection';
 import Hero from '@/components/organisms/Homepage/HeroSection/HeroSection';
@@ -29,10 +29,9 @@ export default function HomePage({
         />
       )}
       {isSignupDialogOpen && (
-        <SignupDialog
+        <SignupDialogContainer
           open={isSignupDialogOpen}
           onOpenChange={onSignupDialogOpenChange}
-          onSubmit={() => console.log('Signup form submitted')}
           onLoginClick={onLoginClick}
         />
       )}

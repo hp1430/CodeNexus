@@ -1,11 +1,16 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
-import HomePage from './pages/Homepage/Homepage';
 import { HomepageWrapper } from './pages/Homepage/HomepageWrapper';
+import { Toaster } from './components/ui/sonner';
 
 function App() {
+  const queryClient = new QueryClient();
   return (
     <>
-      <HomepageWrapper />
+      <QueryClientProvider client={queryClient}>
+        <HomepageWrapper />
+        <Toaster />
+      </QueryClientProvider>
     </>
   );
 }

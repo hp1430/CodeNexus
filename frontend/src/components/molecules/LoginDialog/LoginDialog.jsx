@@ -79,6 +79,7 @@ export const LoginDialog = ({
                     email: e.target.value,
                   });
                 }}
+                className="border-gray-950"
               />
             </Field>
 
@@ -90,7 +91,7 @@ export const LoginDialog = ({
                   id="password-1"
                   name="password"
                   type={visible ? 'text' : 'password'}
-                  className="pr-10" // space for icon
+                  className="pr-10 border-gray-950" // space for icon
                   disable={isPending}
                   onChange={(e) => {
                     setLoginForm({
@@ -130,7 +131,7 @@ export const LoginDialog = ({
             </DialogClose>
             <Button
               type="submit"
-              className="cursor-pointer"
+              className="cursor-pointer bg-blue-600"
               disable={isPending}
             >
               Login

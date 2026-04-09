@@ -16,7 +16,7 @@ export const signupRequest = async ({ email, password, name }) => {
 
 export const loginRequest = async ({ email, password }) => {
   try {
-    const response = await axios.put('/auth/login', {
+    const response = await axios.post('/auth/login', {
       email,
       password,
     });

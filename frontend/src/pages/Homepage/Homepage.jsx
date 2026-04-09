@@ -1,4 +1,5 @@
 import { LoginDialog } from '@/components/molecules/LoginDialog/LoginDialog';
+import { LoginDialogContainer } from '@/components/molecules/LoginDialog/LoginDialogContainer';
 import { SignupDialogContainer } from '@/components/molecules/SignupDialog/SignupDialogContainer';
 import CTA from '@/components/organisms/Homepage/CtaSection/CtaSection';
 import Features from '@/components/organisms/Homepage/FeaturesSection/FeaturesSection';
@@ -9,7 +10,6 @@ export default function HomePage({
   isLoginDialogOpen,
   onLoginClick,
   onLoginDialogOpenChange,
-  onLoginFormSubmit,
   isSignupDialogOpen,
   onSignupClick,
   onSignupDialogOpenChange,
@@ -21,10 +21,9 @@ export default function HomePage({
       <Features />
       <CTA />
       {isLoginDialogOpen && (
-        <LoginDialog
+        <LoginDialogContainer
           open={isLoginDialogOpen}
           onOpenChange={onLoginDialogOpenChange}
-          onSubmit={onLoginFormSubmit}
           onSignupClick={onSignupClick}
         />
       )}

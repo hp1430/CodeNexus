@@ -19,12 +19,6 @@ export const HomepageWrapper = () => {
     }, 300);
   }
 
-  function handleLoginFormSubmit(e) {
-    e.preventDefault();
-    console.log('Login form submitted');
-    setLoginDialogOpen(false);
-  }
-
   return (
     <HomePage
       isLoginDialogOpen={isLoginDialogOpen}
@@ -33,7 +27,6 @@ export const HomepageWrapper = () => {
       onSignupClick={handleSignupClick}
       onLoginDialogOpenChange={setLoginDialogOpen}
       onSignupDialogOpenChange={setSignupDialogOpen}
-      onLoginFormSubmit={handleLoginFormSubmit}
     />
   );
 };

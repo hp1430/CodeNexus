@@ -33,9 +33,9 @@ export const SignupDialog = ({
       <DialogContent className="sm:max-w-sm">
         <form onSubmit={onSubmit}>
           <DialogHeader>
-            <DialogTitle>Login</DialogTitle>
+            <DialogTitle>Signup</DialogTitle>
             <DialogDescription>
-              Enter your credentials to access your account.
+              Enter your details to create your account.
             </DialogDescription>
           </DialogHeader>
 
@@ -76,6 +76,8 @@ export const SignupDialog = ({
                 onChange={(e) =>
                   setSignupForm({ ...signupForm, email: e.target.value })
                 }
+                className="border-gray-950"
+                placeholder="Email"
               />
             </Field>
 
@@ -89,6 +91,8 @@ export const SignupDialog = ({
                 onChange={(e) =>
                   setSignupForm({ ...signupForm, name: e.target.value })
                 }
+                className="border-gray-950"
+                placeholder="Name"
               />
             </Field>
 
@@ -102,6 +106,8 @@ export const SignupDialog = ({
                 onChange={(e) =>
                   setSignupForm({ ...signupForm, password: e.target.value })
                 }
+                className="border-gray-950"
+                placeholder="Password"
               />
             </Field>
 
@@ -113,7 +119,7 @@ export const SignupDialog = ({
                   id="confirm-password-1"
                   name="confirmPassword"
                   type={visible ? 'text' : 'password'}
-                  className="pr-10" // space for icon
+                  className="pr-10 border-gray-950" // space for icon
                   disabled={isPending}
                   onChange={(e) =>
                     setSignupForm({
@@ -121,6 +127,7 @@ export const SignupDialog = ({
                       confirmPassword: e.target.value,
                     })
                   }
+                  placeholder="Confirm Password"
                 />
 
                 {visible ? (
@@ -153,7 +160,7 @@ export const SignupDialog = ({
             </DialogClose>
             <Button
               type="submit"
-              className="cursor-pointer"
+              className="cursor-pointer bg-indigo-600"
               disabled={isPending}
             >
               Signup

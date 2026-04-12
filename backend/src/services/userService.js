@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 
-import { emailQueue } from '../configs/queueConfig.js';
 import otpRepository from '../repositories/otpRepository.js';
 import userRepository from '../repositories/userRepository.js';
 import { createJWT } from '../utils/common/authUtils.js';
 import { internalErrorResponse } from '../utils/common/responseObjects.js';
+import generateOtp from '../utils/emails/generateOtp.js';
+import { sendOtp } from '../utils/emails/sendOtp.js';
 import ClientError from '../utils/error/clientError.js';
 import ValidationError from '../utils/error/validationError.js';
 
@@ -17,32 +18,20 @@ export const signupService = async (userData) => {
       isVerified: false
     });
 
-    // generate otp
-    const otp = Math.floor(100000 + Math.random() * 900000);
-
-    const hashedOtp = await bcrypt.hash(otp.toString(), 10);
+    const otp = await generateOtp();
 
     await otpRepository.upsertOtp({
       userId: newUser._id,
-      otpHash: hashedOtp,
+      otpHash: otp,
       expiresAt: new Date(Date.now() + 10 * 60 * 1000)
     });
 
     // push job to bullMQ
-    await emailQueue.add(
-      'send-otp',
-      {
-        email: newUser.email,
-        otp: otp
-      },
-      {
-        attempts: 3,
-        backoff: {
-          type: 'exponential',
-          delay: 2000
-        }
-      }
-    );
+    sendOtp({
+      email: newUser.email,
+      otp: otp
+    });
+
     return newUser;
   } catch (error) {
     console.log('Error in signupService: ', error);

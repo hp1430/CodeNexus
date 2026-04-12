@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 
+import { emailQueue } from '../configs/queueConfig.js';
 import userRepository from '../repositories/userRepository.js';
 import { createJWT } from '../utils/common/authUtils.js';
 import { internalErrorResponse } from '../utils/common/responseObjects.js';
@@ -9,7 +10,30 @@ import ValidationError from '../utils/error/validationError.js';
 
 export const signupService = async (userData) => {
   try {
-    const newUser = await userRepository.createUser(userData);
+    // create user
+    const newUser = await userRepository.createUser({
+      ...userData,
+      isVerified: false
+    });
+
+    // generate otp
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    // push job to bullMQ
+    await emailQueue.add(
+      'send-otp',
+      {
+        email: newUser.email,
+        otp: otp
+      },
+      {
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 2000
+        }
+      }
+    );
     return newUser;
   } catch (error) {
     console.log('Error in signupService: ', error);

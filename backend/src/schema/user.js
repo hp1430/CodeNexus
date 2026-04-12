@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
+import { boolean } from 'zod';
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,6 +23,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Name is required'],
       trim: true
+    },
+    isVerified: {
+      type: boolean,
+      required: true
     }
   },
   { timestamps: true }

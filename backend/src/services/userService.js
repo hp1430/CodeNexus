@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 
 import { emailQueue } from '../configs/queueConfig.js';
+import otpRepository from '../repositories/otpRepository.js';
 import userRepository from '../repositories/userRepository.js';
 import { createJWT } from '../utils/common/authUtils.js';
 import { internalErrorResponse } from '../utils/common/responseObjects.js';
@@ -18,6 +19,14 @@ export const signupService = async (userData) => {
 
     // generate otp
     const otp = Math.floor(100000 + Math.random() * 900000);
+
+    const hashedOtp = await bcrypt.hash(otp.toString(), 10);
+
+    await otpRepository.upsertOtp({
+      userId: newUser._id,
+      otpHash: hashedOtp,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+    });
 
     // push job to bullMQ
     await emailQueue.add(

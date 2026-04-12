@@ -18,18 +18,18 @@ export const signupService = async (userData) => {
       isVerified: false
     });
 
-    const otp = await generateOtp();
+    const { otpGenerated, hashedOtp } = await generateOtp();
 
     await otpRepository.upsertOtp({
       userId: newUser._id,
-      otpHash: otp,
+      otpHash: hashedOtp,
       expiresAt: new Date(Date.now() + 10 * 60 * 1000)
     });
 
     // push job to bullMQ
     sendOtp({
       email: newUser.email,
-      otp: otp
+      otp: otpGenerated
     });
 
     return newUser;

@@ -1,8 +1,10 @@
 import { Queue } from 'bullmq';
 
+import { REDIS_HOST_IP, REDIS_PORT } from './serverConfig.js';
+
 export const emailQueue = new Queue('emailQueue', {
   connection: {
-    host: '127.0.0.1',
-    port: 6379
+    host: REDIS_HOST_IP,
+    port: REDIS_PORT
   }
 });

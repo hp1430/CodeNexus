@@ -1,5 +1,7 @@
 import { Worker } from 'bullmq';
 
+import { REDIS_HOST_IP, REDIS_PORT } from '../configs/serverConfig.js';
+
 const worker = new Worker(
   'emailQueue',
   async (job) => {
@@ -13,8 +15,8 @@ const worker = new Worker(
   },
   {
     connection: {
-      host: '127.0.0.1',
-      port: 6379
+      host: REDIS_HOST_IP,
+      port: REDIS_PORT
     }
   }
 );

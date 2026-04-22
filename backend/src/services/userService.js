@@ -75,7 +75,7 @@ export const loginService = async (userData) => {
         statusCode: StatusCodes.NOT_FOUND
       });
     }
-    if(!user.isVerified){
+    if (!user.isVerified) {
       throw new ClientError({
         explanation: 'Email not verified',
         message: 'Please verify your email before logging in',

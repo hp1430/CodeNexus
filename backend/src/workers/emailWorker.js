@@ -1,17 +1,21 @@
 import { Worker } from 'bullmq';
 
 import { REDIS_HOST_IP, REDIS_PORT } from '../configs/serverConfig.js';
+import { sendOtpEmail } from '../services/emailService.js';
 
 const worker = new Worker(
   'emailQueue',
   async (job) => {
     const { email, otp } = job.data;
 
-    // 🔥 MOCK EMAIL (for now)
-    console.log('=================================');
-    console.log(`📧 Sending OTP to: ${email}`);
-    console.log(`🔑 OTP: ${otp}`);
-    console.log('=================================');
+    console.log(`Processing job ${job.id}: Sending OTP ${otp} to ${email}`);
+
+    await sendOtpEmail({
+      to: email,
+      otp: otp
+    });
+
+    console.log(`Job ${job.id} completed: OTP sent to ${email}`);
   },
   {
     connection: {

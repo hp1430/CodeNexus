@@ -13,3 +13,7 @@ export const JWT_EXPIRY = process.env.JWT_EXPIRY || '1d';
 export const REDIS_HOST_IP = process.env.REDIS_HOST_IP;
 
 export const REDIS_PORT = process.env.REDIS_PORT;
+
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
+export const EMAIL_FROM = process.env.EMAIL_FROM;

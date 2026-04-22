@@ -10,7 +10,7 @@ const otpRepository = {
         attempts: 0
       },
       {
-        upserts: true,
+        upsert: true,
         new: true
       }
     );

@@ -1,6 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { loginService, signupService } from '../services/userService.js';
+import {
+  loginService,
+  otpVerificationService,
+  signupService
+} from '../services/userService.js';
 import {
   customErrorResponse,
   internalErrorResponse,
@@ -30,6 +34,23 @@ export const login = async (req, res) => {
     return res
       .status(StatusCodes.OK)
       .json(successResponse(response, 'User logged in successfully'));
+  } catch (error) {
+    console.log('User Controller error: ', error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+};
+
+export const verifyOtp = async (req, res) => {
+  try {
+    const response = await otpVerificationService(req.body, true);
+    return res
+      .status(StatusCodes.OK)
+      .json(successResponse(response, 'OTP verified successfully'));
   } catch (error) {
     console.log('User Controller error: ', error);
     if (error.statusCode) {

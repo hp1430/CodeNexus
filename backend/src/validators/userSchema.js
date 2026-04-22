@@ -12,3 +12,8 @@ export const userLoginSchema = z.object({
   email: z.string().email(),
   password: z.string()
 });
+
+export const otpVerificationSchema = z.object({
+  email: z.string().email(),
+  otp: z.string().length(6, { message: 'OTP must be 6 digits' })
+});

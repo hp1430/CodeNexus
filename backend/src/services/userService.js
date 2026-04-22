@@ -12,11 +12,19 @@ import ValidationError from '../utils/error/validationError.js';
 
 export const signupService = async (userData) => {
   try {
+    let newUser;
+    // fetch user by email to check if user already exists
+    const existingUser = await userRepository.findUserByEmail(userData.email);
+    if (existingUser && !existingUser.isVerified) {
+      newUser = existingUser;
+    }
     // create user
-    const newUser = await userRepository.createUser({
-      ...userData,
-      isVerified: false
-    });
+    if (!newUser) {
+      newUser = await userRepository.createUser({
+        ...userData,
+        isVerified: false
+      });
+    }
 
     const { otpGenerated, hashedOtp } = await generateOtp();
 

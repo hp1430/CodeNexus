@@ -28,6 +28,7 @@ export const loginRequest = async ({ email, password }) => {
 };
 
 export const otpVerificationRequest = async ({ email, otp }) => {
+  console.log('Verifying OTP for email:', email, 'with OTP:', otp);
   try {
     const response = await axios.post('/auth/verify-otp', {
       email,

@@ -21,11 +21,12 @@ export const SignupDialogContainer = ({
 
   useEffect(() => {
     if (isSuccess) {
+      localStorage.setItem('signupEmail', signupForm.email);
       setTimeout(() => {
         openOtpDialog();
       }, 300);
     }
-  }, [isSuccess, openOtpDialog]);
+  }, [isSuccess, openOtpDialog, signupForm.email]);
 
   async function handleSignupFormSubmit(e) {
     e.preventDefault();

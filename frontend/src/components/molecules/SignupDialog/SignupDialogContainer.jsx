@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SignupDialog } from './SignupDialog';
 import { useSignup } from '@/hooks/apis/auth/useSignup';
 
-export const SignupDialogContainer = ({ open, onOpenChange, onLoginClick }) => {
+export const SignupDialogContainer = ({
+  open,
+  onOpenChange,
+  onLoginClick,
+  openOtpDialog,
+}) => {
   const [signupForm, setSignupForm] = useState({
     email: '',
     password: '',
@@ -13,6 +18,14 @@ export const SignupDialogContainer = ({ open, onOpenChange, onLoginClick }) => {
   const [validationError, setValidationError] = useState(null);
 
   const { isPending, error, isSuccess, signupMutation } = useSignup();
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        openOtpDialog();
+      }, 300);
+    }
+  }, [isSuccess, openOtpDialog]);
 
   async function handleSignupFormSubmit(e) {
     e.preventDefault();

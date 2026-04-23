@@ -1,5 +1,6 @@
 import { LoginDialog } from '@/components/molecules/LoginDialog/LoginDialog';
 import { LoginDialogContainer } from '@/components/molecules/LoginDialog/LoginDialogContainer';
+import { OTPDialogContainer } from '@/components/molecules/otpDialog/otpDialogContainer';
 import { SignupDialogContainer } from '@/components/molecules/SignupDialog/SignupDialogContainer';
 import CTA from '@/components/organisms/Homepage/CtaSection/CtaSection';
 import Features from '@/components/organisms/Homepage/FeaturesSection/FeaturesSection';
@@ -13,6 +14,9 @@ export default function HomePage({
   isSignupDialogOpen,
   onSignupClick,
   onSignupDialogOpenChange,
+  isOtpDialogOpen,
+  onOtpDialogOpenChange,
+  openOtpDialog,
 }) {
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -32,6 +36,13 @@ export default function HomePage({
           open={isSignupDialogOpen}
           onOpenChange={onSignupDialogOpenChange}
           onLoginClick={onLoginClick}
+          openOtpDialog={openOtpDialog}
+        />
+      )}
+      {isOtpDialogOpen && (
+        <OTPDialogContainer
+          open={isOtpDialogOpen}
+          onOpenChange={onOtpDialogOpenChange}
         />
       )}
     </div>

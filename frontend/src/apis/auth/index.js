@@ -26,3 +26,16 @@ export const loginRequest = async ({ email, password }) => {
     throw error.response.data;
   }
 };
+
+export const otpVerificationRequest = async ({ email, otp }) => {
+  try {
+    const response = await axios.post('/auth/verify-otp', {
+      email,
+      otp,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error.response.data;
+  }
+};

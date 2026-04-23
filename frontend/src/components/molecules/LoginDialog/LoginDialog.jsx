@@ -13,7 +13,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, LucideLoader2, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 
 export const LoginDialog = ({
   open,
@@ -58,8 +57,8 @@ export const LoginDialog = ({
           {isSuccess && (
             <div className="bg-green-100 border border-green-300 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-800 mb-5">
               <p className="flex items-center">
-                Successfully Logged in. Close this dialog to continue.
-                <LucideLoader2 className="animate-spin ml-2" />
+                Successfully Logged in. You can now close this dialog to
+                continue.
               </p>
             </div>
           )}

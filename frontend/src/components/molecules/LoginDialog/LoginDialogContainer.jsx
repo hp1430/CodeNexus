@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoginDialog } from './LoginDialog';
 import { useLogin } from '@/hooks/apis/auth/useLogin';
 
@@ -23,6 +23,14 @@ export const LoginDialogContainer = ({ open, onOpenChange, onSignupClick }) => {
       password: loginForm.password,
     });
   }
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        onOpenChange(false);
+      }, 1500);
+    }
+  }, [isSuccess, onOpenChange]);
+
   return (
     <LoginDialog
       open={open}

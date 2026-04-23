@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OTPDialog } from './otpDialog';
 import { useVerifyOtp } from '@/hooks/apis/auth/useVerifyOtp';
 
@@ -36,6 +36,14 @@ export const OTPDialogContainer = ({ open, onOpenChange }) => {
     setValidationError(null);
     await verifyOtpMutation({ otp: otpForm.otp, email: email });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        onOpenChange(false);
+      }, 1500);
+    }
+  }, [isSuccess, onOpenChange]);
 
   return (
     <OTPDialog

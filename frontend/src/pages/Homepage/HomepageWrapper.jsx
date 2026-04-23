@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import HomePage from './Homepage';
+import useUserStore from '@/hooks/store/useUserStore';
 
 export const HomepageWrapper = () => {
   const [isLoginDialogOpen, setLoginDialogOpen] = useState(false);
   const [isSignupDialogOpen, setSignupDialogOpen] = useState(false);
   const [isOtpDialogOpen, setOtpDialogOpen] = useState(false);
+
+  const { user, token } = useUserStore();
 
   function handleLoginClick() {
     setLoginDialogOpen(true);
@@ -32,6 +35,8 @@ export const HomepageWrapper = () => {
     setOtpDialogOpen(value);
   }
 
+  const isLoggedIn = !!user && !!token;
+
   return (
     <HomePage
       isLoginDialogOpen={isLoginDialogOpen}
@@ -43,6 +48,7 @@ export const HomepageWrapper = () => {
       isOtpDialogOpen={isOtpDialogOpen}
       onOtpDialogOpenChange={handleOtpDialogOpenChange}
       openOtpDialog={openOtpDialog}
+      isLoggedIn={isLoggedIn}
     />
   );
 };

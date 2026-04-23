@@ -17,10 +17,11 @@ export default function HomePage({
   isOtpDialogOpen,
   onOtpDialogOpenChange,
   openOtpDialog,
+  isLoggedIn,
 }) {
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Navbar onLoginClick={onLoginClick} />
+      <Navbar onLoginClick={onLoginClick} isLoggedIn={isLoggedIn} />
       <Hero />
       <Features />
       <CTA />

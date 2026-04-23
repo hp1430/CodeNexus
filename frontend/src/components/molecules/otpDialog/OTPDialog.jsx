@@ -12,7 +12,6 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LucideLoader2, TriangleAlert } from 'lucide-react';
-import { FaCheck } from 'react-icons/fa';
 import { useRef } from 'react';
 
 export const OTPDialog = ({
@@ -75,10 +74,9 @@ export const OTPDialog = ({
           )}
 
           {isSuccess && (
-            <div className="bg-primary/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-primary mb-5">
-              <FaCheck className="size-5" />
+            <div className="bg-green-100 border border-green-300 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-800 mb-5">
               <p>
-                OTP verified successfully
+                OTP verified successfully. Login after closing the dialog.
                 <LucideLoader2 className="animate-spin ml-2" />
               </p>
             </div>

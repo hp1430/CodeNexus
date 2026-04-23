@@ -13,7 +13,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, LucideLoader2, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 
 export const SignupDialog = ({
   open,
@@ -56,10 +55,9 @@ export const SignupDialog = ({
           )}
 
           {isSuccess && (
-            <div className="bg-primary/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-primary mb-5">
-              <FaCheck className="size-5" />
-              <p>
-                Successfully signed up. Verify your email id on next page.
+            <div className="bg-green-100 border border-green-300 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-800 mb-5">
+              <p className="flex items-center">
+                Successfully signed up. Enter OTP on next page.
                 <LucideLoader2 className="animate-spin ml-2" />
               </p>
             </div>

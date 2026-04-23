@@ -32,11 +32,11 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', async function () {
-  const user = this;
+userSchema.pre('save', function () {
+  if (!this.isModified('password')) return;
+
   const salt = bcrypt.genSaltSync(11);
-  const hasedPassword = bcrypt.hashSync(user.password, salt);
-  user.password = hasedPassword;
+  this.password = bcrypt.hashSync(this.password, salt);
 });
 
 const User = mongoose.model('User', userSchema);

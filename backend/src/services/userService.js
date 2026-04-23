@@ -82,10 +82,13 @@ export const loginService = async (userData) => {
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
+    console.log('Password from request: ', userData.password);
+    console.log('Hashed password from DB: ', user.password);
     const isPasswordValid = bcrypt.compareSync(
       userData.password,
       user.password
     );
+    console.log('Is password valid: ', isPasswordValid);
     if (!isPasswordValid) {
       throw new ClientError({
         explanation: 'Invalid password',

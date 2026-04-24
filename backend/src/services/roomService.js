@@ -39,3 +39,52 @@ export const createRoomService = async (userId) => {
     throw new Error('Unexpected error in createRoomService', { cause: error });
   }
 };
+
+export const joinRoomService = async (roomId, userId) => {
+  try {
+    // 1. Validate input (minimal)
+    if (!roomId) {
+      throw new ValidationError(
+        { error: ['Room ID is required'] },
+        'Room ID is required'
+      );
+    }
+
+    // 2. Find room
+    const room = await roomRepository.getRoomByRoomId(roomId);
+
+    if (!room) {
+      throw new ValidationError(
+        { error: ['Room not found'] },
+        'Room not found'
+      );
+    }
+
+    // 3. Check if already participant
+    const isAlreadyParticipant = room.participants.some(
+      (id) => id.toString() === userId.toString()
+    );
+
+    // ✅ Do NOT throw error here
+    if (!isAlreadyParticipant) {
+      room.participants.push(userId);
+      await room.save();
+    }
+
+    // 4. Return response
+    return {
+      roomId: room.roomId,
+      code: room.code
+    };
+  } catch (error) {
+    // ✅ If already ValidationError → just rethrow
+    if (error instanceof ValidationError) {
+      throw error;
+    }
+
+    // ❗ Unexpected error
+    throw new Error('Unexpected error in joinRoomService', {
+      cause: error
+    });
+  }
+};

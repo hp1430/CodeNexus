@@ -1,7 +1,7 @@
 import { createRoomRequest } from '@/apis/room';
 import { useMutation } from '@tanstack/react-query';
 
-export const useRoom = () => {
+export const useCreateRoom = () => {
   const {
     isPending,
     error,

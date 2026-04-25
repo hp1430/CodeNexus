@@ -22,7 +22,7 @@ export default function HomePage({
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar onLoginClick={onLoginClick} isLoggedIn={isLoggedIn} />
-      <HeroSectionContainer />
+      <HeroSectionContainer setLoginDialogOpen={onLoginDialogOpenChange} />
       <Features />
       <CTA />
       {isLoginDialogOpen && (

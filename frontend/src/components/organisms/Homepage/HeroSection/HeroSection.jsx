@@ -1,6 +1,10 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
 
-export default function Hero({ onCreateRoom, isCreatingRoom }) {
+export default function Hero({
+  onCreateRoom,
+  isCreatingRoom,
+  onJoinRoomClick,
+}) {
   return (
     <section className="text-center py-20 px-6">
       <h1 className="text-5xl font-bold leading-tight">
@@ -18,7 +22,10 @@ export default function Hero({ onCreateRoom, isCreatingRoom }) {
         >
           {isCreatingRoom ? 'Creating Room...' : 'Create Room'}
         </Button>
-        <Button className="bg-gray-200 text-black cursor-pointer">
+        <Button
+          className="bg-gray-200 text-black cursor-pointer"
+          onClick={onJoinRoomClick}
+        >
           Join Room
         </Button>
       </div>

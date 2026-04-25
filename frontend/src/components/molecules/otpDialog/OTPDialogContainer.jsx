@@ -56,6 +56,9 @@ export const OTPDialogContainer = ({ open, onOpenChange }) => {
       error={error}
       isSuccess={isSuccess}
       isPending={isPending}
+      title="Enter OTP"
+      description="Please enter the 6-digit OTP sent to your email to complete the signup process."
+      label="OTP"
     />
   );
 };

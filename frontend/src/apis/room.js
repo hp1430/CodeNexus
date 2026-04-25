@@ -12,7 +12,8 @@ export const createRoomRequest = async () => {
 
 export const joinRoomRequest = async (roomId) => {
   try {
-    const response = await axios.post('/room/join', { roomId });
+    console.log('Joining room with code: ', roomId.roomId);
+    const response = await axios.post('/room/join', { roomId: roomId.roomId });
     return response.data;
   } catch (error) {
     console.error('Error joining room: ', error);

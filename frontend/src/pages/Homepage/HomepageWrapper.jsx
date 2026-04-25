@@ -6,6 +6,7 @@ export const HomepageWrapper = () => {
   const [isLoginDialogOpen, setLoginDialogOpen] = useState(false);
   const [isSignupDialogOpen, setSignupDialogOpen] = useState(false);
   const [isOtpDialogOpen, setOtpDialogOpen] = useState(false);
+  const [isJoinRoomDialogOpen, setJoinRoomDialogOpen] = useState(false);
 
   const { user, token } = useUserStore();
 
@@ -49,6 +50,8 @@ export const HomepageWrapper = () => {
       onOtpDialogOpenChange={handleOtpDialogOpenChange}
       openOtpDialog={openOtpDialog}
       isLoggedIn={isLoggedIn}
+      isJoinRoomDialogOpen={isJoinRoomDialogOpen}
+      setJoinRoomDialogOpen={setJoinRoomDialogOpen}
     />
   );
 };

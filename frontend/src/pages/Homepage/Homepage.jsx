@@ -1,3 +1,4 @@
+import { JoinRoomDialogContainer } from '@/components/molecules/JoinRoomDialog/JoinRoomDialogContainer';
 import { LoginDialogContainer } from '@/components/molecules/LoginDialog/LoginDialogContainer';
 import { OTPDialogContainer } from '@/components/molecules/otpDialog/otpDialogContainer';
 import { SignupDialogContainer } from '@/components/molecules/SignupDialog/SignupDialogContainer';
@@ -18,11 +19,16 @@ export default function HomePage({
   onOtpDialogOpenChange,
   openOtpDialog,
   isLoggedIn,
+  isJoinRoomDialogOpen,
+  setJoinRoomDialogOpen,
 }) {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar onLoginClick={onLoginClick} isLoggedIn={isLoggedIn} />
-      <HeroSectionContainer setLoginDialogOpen={onLoginDialogOpenChange} />
+      <HeroSectionContainer
+        setLoginDialogOpen={onLoginDialogOpenChange}
+        setJoinRoomDialogOpen={setJoinRoomDialogOpen}
+      />
       <Features />
       <CTA />
       {isLoginDialogOpen && (
@@ -44,6 +50,12 @@ export default function HomePage({
         <OTPDialogContainer
           open={isOtpDialogOpen}
           onOpenChange={onOtpDialogOpenChange}
+        />
+      )}
+      {isJoinRoomDialogOpen && (
+        <JoinRoomDialogContainer
+          open={isJoinRoomDialogOpen}
+          onOpenChange={setJoinRoomDialogOpen}
         />
       )}
     </div>

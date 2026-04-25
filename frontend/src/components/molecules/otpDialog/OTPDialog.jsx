@@ -18,17 +18,20 @@ export const OTPDialog = ({
   open,
   onOpenChange,
   onSubmit,
-  validationError,
-  error,
-  isSuccess,
-  isPending,
+  validationError = false,
+  error = false,
+  isSuccess = false,
+  isPending = false,
   otpForm,
   setOtpForm,
+  title,
+  description,
+  label,
 }) => {
   const inputsRef = useRef([]);
 
   const handleChange = (value, index) => {
-    if (!/^\d?$/.test(value)) return;
+    //if (!/^\d?$/.test(value)) return;
 
     const newOtp = otpForm.otp.split('');
     newOtp[index] = value;
@@ -51,10 +54,8 @@ export const OTPDialog = ({
       <DialogContent className="sm:max-w-sm">
         <form onSubmit={onSubmit}>
           <DialogHeader>
-            <DialogTitle>Verify OTP</DialogTitle>
-            <DialogDescription>
-              Enter the OTP sent to your email.
-            </DialogDescription>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
 
           <br />
@@ -84,7 +85,7 @@ export const OTPDialog = ({
 
           <FieldGroup>
             <Field>
-              <Label>OTP:</Label>
+              <Label>{label}:</Label>
 
               <div className="flex justify-between gap-2 mt-2">
                 {Array(6)

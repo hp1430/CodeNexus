@@ -25,10 +25,14 @@ export const PlaygroundContainer = () => {
   }, [roomId, joinRoomMutation]);
 
   useEffect(() => {
+    if (!roomId) return;
+
     socket.connect();
+
     socket.on('connect', () => {
-      console.log('Connected to WebSocket server with ID: ', socket.id);
+      socket.emit('join-room', { roomId });
     });
+
     socket.on('disconnect', () => {
       console.log('Disconnected from WebSocket server');
     });
@@ -38,6 +42,6 @@ export const PlaygroundContainer = () => {
       socket.off('disconnect');
       socket.disconnect();
     };
-  }, []);
+  }, [roomId]);
   return <Playground roomId={roomId} code={code} setCode={setCode} />;
 };

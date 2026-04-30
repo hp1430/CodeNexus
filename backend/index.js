@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 import connectDB from './src/configs/dbConfig.js';
 import { PORT } from './src/configs/serverConfig.js';
 import apiRouter from './src/routes/appRouter.js';
+import { playgroundEventHandler } from './src/utils/socket/playgroundEventHandler.js';
 
 const app = express();
 
@@ -29,6 +30,8 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
+
+  playgroundEventHandler(io, socket);
 
   socket.on('disconnect', () => {
     console.log('A user disconnected:', socket.id);

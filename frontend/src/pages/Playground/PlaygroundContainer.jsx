@@ -3,6 +3,7 @@ import { Playground } from './Playground';
 import { useEffect, useState } from 'react';
 import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
 import { socket } from '@/configs/socketConfig';
+import { playgroundSocketHandler } from '@/lib/playgroundSocketHandler';
 
 export const PlaygroundContainer = () => {
   const { roomId } = useParams();
@@ -31,6 +32,7 @@ export const PlaygroundContainer = () => {
 
     socket.on('connect', () => {
       socket.emit('join-room', { roomId });
+      playgroundSocketHandler(socket, roomId, setCode);
     });
 
     socket.on('disconnect', () => {
@@ -43,5 +45,10 @@ export const PlaygroundContainer = () => {
       socket.disconnect();
     };
   }, [roomId]);
-  return <Playground roomId={roomId} code={code} setCode={setCode} />;
+
+  function handleCodeChange(newCode) {
+    setCode(newCode);
+    socket.emit('code-change', { roomId, code: newCode });
+  }
+  return <Playground roomId={roomId} code={code} setCode={handleCodeChange} />;
 };

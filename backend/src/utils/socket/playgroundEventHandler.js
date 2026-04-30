@@ -6,4 +6,9 @@ export const playgroundEventHandler = (io, socket) => {
     console.log(`Socket ${socket.id} joining room: ${roomId}`);
     socket.join(roomId);
   });
+
+  // Code Change Event
+  socket.on('code-change', ({ roomId, code }) => {
+    socket.to(roomId).emit('code-update', { code });
+  });
 };

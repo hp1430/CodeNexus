@@ -15,4 +15,8 @@ export const playgroundSocketHandler = (socket, roomId, setCode, setUsers) => {
   socket.on('user-left', ({ userId }) => {
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
   });
+
+  socket.on('users-list', ({ users }) => {
+    setUsers(users);
+  });
 };

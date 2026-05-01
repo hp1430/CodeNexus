@@ -5,6 +5,7 @@ import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
 import { socket } from '@/configs/socketConfig';
 import { playgroundSocketHandler } from '@/lib/playgroundSocketHandler';
 import useUserStore from '@/hooks/store/useUserStore';
+import { UserCheck2Icon } from 'lucide-react';
 
 export const PlaygroundContainer = () => {
   const { roomId } = useParams();
@@ -50,7 +51,7 @@ export const PlaygroundContainer = () => {
       socket.off('disconnect');
       socket.disconnect();
     };
-  }, [roomId]);
+  }, [roomId, user]);
 
   function handleCodeChange(newCode) {
     setCode(newCode);

@@ -15,13 +15,17 @@ export const playgroundEventHandler = (io, socket, rooms) => {
     if (!rooms[roomId]) {
       const room = await roomRepository.getRoomByRoomId(roomId);
       rooms[roomId] = {
-        code: room?.code || '' // Initialize with existing code or empty string
+        code: room?.code || '', // Initialize with existing code or empty string
+        users: []
       };
     }
+
+    rooms[roomId].users.push(user);
 
     // Send existing code to the newly joined client
     console.log(`Emitting init-code to socket ${socket.id} for room ${roomId}`);
     socket.emit('init-code', { code: rooms[roomId].code });
+    socket.emit('users-list', { users: rooms[roomId].users });
   });
 
   // Code Change Event

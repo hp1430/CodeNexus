@@ -28,7 +28,12 @@ const io = new Server(server, {
   }
 });
 
-const rooms = {}; // In-memory store for rooms and participants
+const rooms = {
+  roomId: {
+    code: '',
+    users: []
+  }
+}; // In-memory store for rooms and participants
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);

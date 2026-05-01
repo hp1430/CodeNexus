@@ -16,7 +16,7 @@ export const PlaygroundContainer = () => {
         console.log('Attempting to join room with ID: ', roomId);
         const response = await joinRoomMutation({ roomId });
         console.log('Room data:', response.data);
-        setCode(response.data.code);
+        setCode((prevCode) => prevCode || response.data.code);
       } catch (err) {
         console.error(err);
       }

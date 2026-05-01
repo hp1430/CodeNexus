@@ -5,9 +5,13 @@ export const playgroundEventHandler = (io, socket, rooms) => {
   console.log('Playground event handler initialized for socket:', socket.id);
 
   // Join Room Event
-  socket.on('join-room', async ({ roomId }) => {
+  socket.on('join-room', async ({ roomId, user }) => {
     console.log(`Socket ${socket.id} joining room: ${roomId}`);
     socket.join(roomId);
+    socket.user = user; // Attach user info to socket for later use
+    console.log('socket.user is : ', socket.user);
+    socket.to(roomId).emit('user-joined', { user });
+
     if (!rooms[roomId]) {
       const room = await roomRepository.getRoomByRoomId(roomId);
       rooms[roomId] = {
@@ -30,5 +34,12 @@ export const playgroundEventHandler = (io, socket, rooms) => {
 
     // Save code to database with debounce
     getSaver(roomId)(code);
+  });
+
+  socket.on('disconnecting', () => {
+    const rooms = [...socket.rooms].filter((r) => r !== socket.id); // Get rooms excluding the socket's own room
+    rooms.forEach((roomId) => {
+      socket.to(roomId).emit('user-left', { user: socket.user });
+    });
   });
 };

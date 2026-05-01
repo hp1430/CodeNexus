@@ -20,6 +20,14 @@ const roomRepository = {
       new: true
     });
     return room;
+  },
+  updateCodeByRoomId: async (roomId, code) => {
+    const room = await Room.findOneAndUpdate(
+      { roomId },
+      { code },
+      { new: true, upsert: true }
+    );
+    return room;
   }
 };
 

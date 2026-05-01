@@ -88,3 +88,32 @@ export const joinRoomService = async (roomId, userId) => {
     });
   }
 };
+
+export const saveRoomCodeService = async (roomId, code) => {
+  try {
+    if (!roomId) {
+      throw new ValidationError(
+        { error: ['Room ID is required'] },
+        'Room ID is required'
+      );
+    }
+
+    const room = await roomRepository.updateCodeByRoomId(roomId, code);
+
+    if (!room) {
+      throw new ValidationError(
+        { error: ['Room not found'] },
+        'Room not found'
+      );
+    }
+
+    return {
+      roomId: room.roomId,
+      code: room.code
+    };
+  } catch (error) {
+    throw new Error('Unexpected error in saveRoomCodeService', {
+      cause: error
+    });
+  }
+};

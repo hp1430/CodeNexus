@@ -41,8 +41,16 @@ export const playgroundEventHandler = (io, socket, rooms) => {
   });
 
   socket.on('disconnecting', () => {
-    const rooms = [...socket.rooms].filter((r) => r !== socket.id); // Get rooms excluding the socket's own room
-    rooms.forEach((roomId) => {
+    console.log(`Socket ${socket.user} is disconnecting...`);
+    const joinedRooms = [...socket.rooms].filter((r) => r !== socket.id); // Get rooms excluding the socket's own room
+    console.log(`Socket ${socket.user} is in rooms:`, joinedRooms);
+    joinedRooms.forEach((roomId) => {
+      if (rooms[roomId]) {
+        rooms[roomId].users = rooms[roomId].users.filter(
+          (u) => u.id !== socket.user.id
+        );
+      }
+      console.log(`Socket ${socket.user} leaving room: ${roomId}`);
       socket.to(roomId).emit('user-left', { user: socket.user });
     });
   });

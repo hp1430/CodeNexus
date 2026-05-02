@@ -1,6 +1,9 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
+import useUserStore from '@/hooks/store/useUserStore';
 
 const EditorToolbar = ({ roomId, users }) => {
+  const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
+  const { user: signedInUser } = useUserStore();
   return (
     <div className="flex justify-between items-center px-4 py-2 bg-[#1e1e1e] border-b border-gray-700 text-gray-200">
       <p className="text-sm">
@@ -8,9 +11,13 @@ const EditorToolbar = ({ roomId, users }) => {
       </p>
 
       <select className="bg-gray-800 text-white p-2 rounded">
-        {users.map((user) => (
-          <option key={user.id}>{user.name}</option>
-        ))}
+        <option key={signedInUser._id}>{signedInUser.name} (You)</option>
+        {sortedUsers.map(
+          (user) =>
+            user.id !== signedInUser._id && (
+              <option key={user._id}>{user.name}</option>
+            )
+        )}
       </select>
 
       <Button className="bg-blue-600 hover:bg-blue-700 text-white">

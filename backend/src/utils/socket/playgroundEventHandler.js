@@ -54,4 +54,15 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       socket.to(roomId).emit('user-left', { user: socket.user });
     });
   });
+
+  socket.on('cursor-change', ({ roomId, position }) => {
+    console.log(
+      `Received cursor change from socket ${socket.id} in room ${roomId}:`,
+      position
+    );
+    socket.to(roomId).emit('cursor-update', {
+      user: socket.user,
+      position
+    });
+  });
 };

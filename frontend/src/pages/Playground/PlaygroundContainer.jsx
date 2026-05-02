@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Playground } from './Playground';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
 import { socket } from '@/configs/socketConfig';
 import { playgroundSocketHandler } from '@/lib/playgroundSocketHandler';
@@ -13,6 +13,10 @@ export const PlaygroundContainer = () => {
   const [users, setUsers] = useState([]);
   const { user } = useUserStore();
   const { joinRoomMutation } = useJoinRoom();
+
+  const editorRef = useRef(null);
+  const decorationRef = useRef({});
+  const monacoRef = useRef(null);
 
   useEffect(() => {
     const loadRoom = async () => {
@@ -39,7 +43,19 @@ export const PlaygroundContainer = () => {
         roomId,
         user: { id: user._id, name: user.name },
       });
-      playgroundSocketHandler(socket, roomId, setCode, setUsers);
+      console.log(
+        'value of monacoInstance in playgroundContainer is: ',
+        monacoRef
+      );
+      playgroundSocketHandler(
+        socket,
+        roomId,
+        setCode,
+        setUsers,
+        editorRef,
+        decorationRef,
+        monacoRef
+      );
     });
 
     socket.on('disconnect', () => {
@@ -63,6 +79,8 @@ export const PlaygroundContainer = () => {
       code={code}
       setCode={handleCodeChange}
       users={users}
+      editorRef={editorRef}
+      monacoRef={monacoRef}
     />
   );
 };

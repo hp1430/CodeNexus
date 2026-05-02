@@ -128,3 +128,13 @@
     @apply font-sans;
   }
 }
+
+.remote-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background-color: red;
+  position: relative;
+  margin-left: -1px;
+  z-index: 10;
+}

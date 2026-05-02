@@ -37,7 +37,7 @@ export const PlaygroundContainer = () => {
     socket.on('connect', () => {
       socket.emit('join-room', {
         roomId,
-        user: { id: user.id, name: user.name },
+        user: { id: user._id, name: user.name },
       });
       playgroundSocketHandler(socket, roomId, setCode, setUsers);
     });

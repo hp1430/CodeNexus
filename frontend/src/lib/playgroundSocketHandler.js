@@ -1,3 +1,5 @@
+import { toast } from 'sonner';
+
 export const playgroundSocketHandler = (socket, roomId, setCode, setUsers) => {
   socket.on('code-update', ({ code }) => {
     setCode(code);
@@ -10,6 +12,7 @@ export const playgroundSocketHandler = (socket, roomId, setCode, setUsers) => {
 
   socket.on('user-joined', ({ user }) => {
     setUsers((prevUsers) => [...prevUsers, user]);
+    toast.success(`${user.name} joined the room!`);
   });
 
   socket.on('user-left', ({ user }) => {

@@ -57,13 +57,42 @@ export const playgroundSocketHandler = (
       },
     };
 
-    const oldDecorations = decorationRef.current[user.id] || [];
+    const oldDecorations = decorationRef.current.cursor[user.id] || [];
 
     const newDecorations = editor.deltaDecorations(oldDecorations, [
       decoration,
     ]);
 
-    decorationRef.current[user.id] = newDecorations;
+    decorationRef.current.cursor[user.id] = newDecorations;
+  });
+
+  socket.on('selection-update', ({ user, selection }) => {
+    const editor = editorRef.current;
+    const monacoInstance = monacoRef.current;
+
+    if (!editor || !monacoInstance) return;
+
+    // if (selection.isEmpty()) return;
+
+    const decoration = {
+      range: new monacoInstance.Range(
+        selection.startLineNumber,
+        selection.startColumn,
+        selection.endLineNumber,
+        selection.endColumn
+      ),
+      options: {
+        className: 'remote-selection',
+        hoverMessage: { value: user.name },
+      },
+    };
+    const oldDecorations = decorationRef.current.selection[user.id] || [];
+
+    const newDecorations = editor.deltaDecorations(oldDecorations, [
+      decoration,
+    ]);
+
+    decorationRef.current.selection[user.id] = newDecorations;
   });
 
   return () => {
@@ -73,5 +102,6 @@ export const playgroundSocketHandler = (
     socket.off('user-joined');
     socket.off('user-left');
     socket.off('users-list');
+    socket.off('selection-update');
   };
 };

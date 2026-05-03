@@ -18,6 +18,17 @@ const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
       );
       socket.emit('cursor-change', { roomId, position });
     });
+
+    editor.onDidChangeCursorSelection((e) => {
+      const selection = e.selection;
+
+      console.log('emitting selection change event: ', roomId, selection);
+
+      socket.emit('selection-change', {
+        roomId,
+        selection,
+      });
+    });
   }
   return (
     <Editor

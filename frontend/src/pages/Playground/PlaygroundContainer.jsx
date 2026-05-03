@@ -5,7 +5,6 @@ import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
 import { socket } from '@/configs/socketConfig';
 import { playgroundSocketHandler } from '@/lib/playgroundSocketHandler';
 import useUserStore from '@/hooks/store/useUserStore';
-import { UserCheck2Icon } from 'lucide-react';
 
 export const PlaygroundContainer = () => {
   const { roomId } = useParams();
@@ -15,7 +14,10 @@ export const PlaygroundContainer = () => {
   const { joinRoomMutation } = useJoinRoom();
 
   const editorRef = useRef(null);
-  const decorationRef = useRef({});
+  const decorationRef = useRef({
+    cursor: {},
+    selection: {},
+  });
   const monacoRef = useRef(null);
 
   useEffect(() => {

@@ -65,4 +65,13 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       position
     });
   });
+
+  socket.on('selection-change', ({roomId, selection}) => {
+    console.log("reveived the selection-change event ", roomId, selection);
+    console.log("emitting selection update event ", socket.user, selection)
+    socket.to(roomId).emit('selection-update', {
+      user: socket.user,
+      selection,
+    })
+  });
 };

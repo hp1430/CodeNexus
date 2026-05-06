@@ -2,14 +2,10 @@ import roomRepository from '../../repositories/roomRepository.js';
 import { getSaver } from './socketServer.js';
 
 export const playgroundEventHandler = (io, socket, rooms) => {
-  console.log('Playground event handler initialized for socket:', socket.id);
-
   // Join Room Event
   socket.on('join-room', async ({ roomId, user }) => {
-    console.log(`Socket ${socket.id} joining room: ${roomId}`);
     socket.join(roomId);
     socket.user = user; // Attach user info to socket for later use
-    console.log('socket.user is : ', socket.user);
     socket.to(roomId).emit('user-joined', { user });
 
     if (!rooms[roomId]) {
@@ -23,7 +19,6 @@ export const playgroundEventHandler = (io, socket, rooms) => {
     rooms[roomId].users.push(user);
 
     // Send existing code to the newly joined client
-    console.log(`Emitting init-code to socket ${socket.id} for room ${roomId}`);
     socket.emit('init-code', { code: rooms[roomId].code });
     socket.emit('users-list', { users: rooms[roomId].users });
   });
@@ -41,25 +36,18 @@ export const playgroundEventHandler = (io, socket, rooms) => {
   });
 
   socket.on('disconnecting', () => {
-    console.log(`Socket ${socket.user} is disconnecting...`);
     const joinedRooms = [...socket.rooms].filter((r) => r !== socket.id); // Get rooms excluding the socket's own room
-    console.log(`Socket ${socket.user} is in rooms:`, joinedRooms);
     joinedRooms.forEach((roomId) => {
       if (rooms[roomId]) {
         rooms[roomId].users = rooms[roomId].users.filter(
           (u) => u.id !== socket.user.id
         );
       }
-      console.log(`Socket ${socket.user} leaving room: ${roomId}`);
       socket.to(roomId).emit('user-left', { user: socket.user });
     });
   });
 
   socket.on('cursor-change', ({ roomId, position }) => {
-    console.log(
-      `Received cursor change from socket ${socket.id} in room ${roomId}:`,
-      position
-    );
     socket.to(roomId).emit('cursor-update', {
       user: socket.user,
       position
@@ -67,8 +55,6 @@ export const playgroundEventHandler = (io, socket, rooms) => {
   });
 
   socket.on('selection-change', ({ roomId, selection }) => {
-    console.log('reveived the selection-change event ', roomId, selection);
-    console.log('emitting selection update event ', socket.user, selection);
     socket.to(roomId).emit('selection-update', {
       user: socket.user,
       selection

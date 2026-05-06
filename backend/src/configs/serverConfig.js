@@ -17,3 +17,7 @@ export const REDIS_PORT = process.env.REDIS_PORT;
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 
 export const EMAIL_FROM = process.env.EMAIL_FROM;
+
+export const YJS_WEBSOCKET_URL = process.env.YJS_WEBSOCKET_URL;
+
+export const WS_PORT = process.env.WS_PORT;

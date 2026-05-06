@@ -38,8 +38,7 @@ const rooms = {
 io.on('connection', (socket) => {
   playgroundEventHandler(io, socket, rooms);
 
-  socket.on('disconnect', () => {
-  });
+  socket.on('disconnect', () => {});
 });
 
 server.listen(PORT, () => {

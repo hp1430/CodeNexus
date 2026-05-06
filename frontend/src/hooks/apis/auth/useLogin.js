@@ -15,8 +15,6 @@ export const useLogin = () => {
     mutationFn: loginRequest,
 
     onSuccess: (response) => {
-      console.log('Logged in successfully ', response);
-
       const user = response.data;
       const token = response.data.token;
 

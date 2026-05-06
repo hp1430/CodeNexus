@@ -14,7 +14,6 @@ export const playgroundSocketHandler = (
   });
 
   socket.on('init-code', ({ code }) => {
-    console.log('Received initial code:', code);
     setCode(code);
   });
 
@@ -24,7 +23,6 @@ export const playgroundSocketHandler = (
   });
 
   socket.on('user-left', ({ user }) => {
-    console.log('User left:', user);
     setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
   });
 
@@ -33,16 +31,10 @@ export const playgroundSocketHandler = (
   });
 
   socket.on('cursor-update', ({ user, position }) => {
-    console.log(`Cursor update from ${user.name}:`, position);
-
     const editor = editorRef.current;
     const monacoInstance = monacoRef.current; // or monacoRef.current if you switch
 
-    console.log('editor and monacoInstances are0: ', editor, monacoInstance);
-
     if (!editor || !monacoInstance) return;
-
-    console.log('editor and monacoInstances are: ', editor, monacoInstance);
 
     const decoration = {
       range: new monacoInstance.Range(

@@ -10,16 +10,8 @@ export const OTPDialogContainer = ({ open, onOpenChange }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('OTP Entered:', otpForm.otp);
-    console.log('Getting email from localstorage');
-    console.log(
-      'Email for OTP verification:',
-      localStorage.getItem('signupEmail')
-    );
     const email = localStorage.getItem('signupEmail');
-    console.log('Email from localStorage:', email);
     if (!email) {
-      console.log('No email found for OTP verification');
       setValidationError({ message: 'No email found for OTP verification' });
       return;
     }

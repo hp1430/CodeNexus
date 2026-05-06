@@ -13,15 +13,12 @@ export const JoinRoomDialogContainer = ({ open, onOpenChange }) => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      console.log('Joining room with code:', otpForm.otp);
       if (!otpForm.otp) {
-        console.log('Room code is required');
         setValidationError({ message: 'Room code is required' });
         return;
       }
       const response = await joinRoomMutation({ roomId: otpForm.otp });
       const roomId = response?.data?.roomId;
-      console.log('Joined room successfully: ', response);
       navigate(`/playground/${roomId}`);
     } catch (err) {
       console.error('Error joining room:', err);

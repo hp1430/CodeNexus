@@ -25,7 +25,6 @@ export const HomepageWrapper = () => {
   }
 
   function openOtpDialog() {
-    console.log('Opening OTP Dialog function is called');
     setOtpDialogOpen(true);
     setTimeout(() => {
       setSignupDialogOpen(false);

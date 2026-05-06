@@ -23,9 +23,7 @@ export const PlaygroundContainer = () => {
   useEffect(() => {
     const loadRoom = async () => {
       try {
-        console.log('Attempting to join room with ID: ', roomId);
         const response = await joinRoomMutation({ roomId });
-        console.log('Room data:', response.data);
         setCode((prevCode) => prevCode || response.data.code);
       } catch (err) {
         console.error(err);
@@ -45,10 +43,7 @@ export const PlaygroundContainer = () => {
         roomId,
         user: { id: user._id, name: user.name },
       });
-      console.log(
-        'value of monacoInstance in playgroundContainer is: ',
-        monacoRef
-      );
+
       playgroundSocketHandler(
         socket,
         roomId,

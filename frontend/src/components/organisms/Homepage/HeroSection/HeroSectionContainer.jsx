@@ -11,7 +11,6 @@ export const HeroSectionContainer = ({
   const token = useUserStore((state) => state.token);
   const navigate = useNavigate();
   async function createRoom() {
-    console.log('Creating room...');
     try {
       if (!token) {
         console.log('User not authenticated. Please log in to create a room.');
@@ -21,7 +20,6 @@ export const HeroSectionContainer = ({
       const response = await createRoomMutation();
       const roomId = response?.data?.roomId;
       navigate(`/playground/${roomId}`);
-      console.log('Room created successfully: ', response);
     } catch (error) {
       console.error('Error creating room: ', error.response.status);
       if (error.response.status === 401) {
@@ -32,7 +30,6 @@ export const HeroSectionContainer = ({
 
   async function handleJoinRoomClick() {
     if (!token) {
-      console.log('User not authenticated. Please log in to join a room.');
       setLoginDialogOpen(true);
       return;
     }

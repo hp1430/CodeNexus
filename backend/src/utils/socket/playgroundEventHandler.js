@@ -19,21 +19,21 @@ export const playgroundEventHandler = (io, socket, rooms) => {
     rooms[roomId].users.push(user);
 
     // Send existing code to the newly joined client
-    socket.emit('init-code', { code: rooms[roomId].code });
+    //socket.emit('init-code', { code: rooms[roomId].code });
     socket.emit('users-list', { users: rooms[roomId].users });
   });
 
   // Code Change Event
-  socket.on('code-change', ({ roomId, code }) => {
-    //update local memory
-    rooms[roomId].code = code;
+  // socket.on('code-change', ({ roomId, code }) => {
+  //   //update local memory
+  //   rooms[roomId].code = code;
 
-    // broadcast code change to other clients in the room
-    socket.to(roomId).emit('code-update', { code });
+  //   // broadcast code change to other clients in the room
+  //   socket.to(roomId).emit('code-update', { code });
 
-    // Save code to database with debounce
-    getSaver(roomId)(code);
-  });
+  //   // Save code to database with debounce
+  //   getSaver(roomId)(code);
+  // });
 
   socket.on('disconnecting', () => {
     const joinedRooms = [...socket.rooms].filter((r) => r !== socket.id); // Get rooms excluding the socket's own room

@@ -11,7 +11,7 @@ const wss = new WebSocketServer({
 });
 
 wss.on('connection', (ws, req) => {
-    console.log("client connected to ws server");
+  console.log('client connected to ws server');
   setupWSConnection(ws, req);
 });
 

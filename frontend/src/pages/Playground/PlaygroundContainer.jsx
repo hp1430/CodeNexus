@@ -68,7 +68,7 @@ export const PlaygroundContainer = () => {
 
   function handleCodeChange(newCode) {
     setCode(newCode);
-    socket.emit('code-change', { roomId, code: newCode });
+    //socket.emit('code-change', { roomId, code: newCode });
   }
   return (
     <Playground

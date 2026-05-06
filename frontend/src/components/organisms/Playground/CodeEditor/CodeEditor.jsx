@@ -1,10 +1,21 @@
 import { socket } from '@/configs/socketConfig';
+import { createYjsProvider } from '@/lib/yjs';
 import Editor from '@monaco-editor/react';
+import { MonacoBinding } from 'y-monaco';
 
 const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
     monacoRef.current = monaco;
+
+    const { yText, provider } = createYjsProvider(roomId);
+
+    new MonacoBinding(
+      yText,
+      editor.getModel(),
+      new Set([editor]),
+      provider.awareness
+    );
 
     //listen to cursor movement
     editor.onDidChangeCursorPosition((e) => {

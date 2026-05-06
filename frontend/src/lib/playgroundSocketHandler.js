@@ -9,9 +9,9 @@ export const playgroundSocketHandler = (
   decorationRef,
   monacoRef
 ) => {
-  socket.on('code-update', ({ code }) => {
-    setCode(code);
-  });
+  // socket.on('code-update', ({ code }) => {
+  //   setCode(code);
+  // });
 
   socket.on('init-code', ({ code }) => {
     setCode(code);
@@ -89,7 +89,7 @@ export const playgroundSocketHandler = (
 
   return () => {
     socket.off('cursor-update');
-    socket.off('code-update');
+    // socket.off('code-update');
     socket.off('init-code');
     socket.off('user-joined');
     socket.off('user-left');

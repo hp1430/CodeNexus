@@ -13,9 +13,9 @@ export const playgroundSocketHandler = (
   //   setCode(code);
   // });
 
-  socket.on('init-code', ({ code }) => {
-    setCode(code);
-  });
+  // socket.on('init-code', ({ code }) => {
+  //   setCode(code);
+  // });
 
   socket.on('user-joined', ({ user }) => {
     setUsers((prevUsers) => [...prevUsers, user]);

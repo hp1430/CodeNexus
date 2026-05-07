@@ -1,5 +1,4 @@
 import roomRepository from '../../repositories/roomRepository.js';
-import { getSaver } from './socketServer.js';
 
 export const playgroundEventHandler = (io, socket, rooms) => {
   // Join Room Event

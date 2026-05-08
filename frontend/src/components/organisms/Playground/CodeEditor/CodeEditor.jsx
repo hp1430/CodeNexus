@@ -1,7 +1,7 @@
 import useUserStore from '@/hooks/store/useUserStore';
 import { createYjsProvider } from '@/lib/yjs';
 import Editor from '@monaco-editor/react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { MonacoBinding } from 'y-monaco';
 import * as Y from 'yjs';
 
@@ -39,6 +39,36 @@ const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
 
     provider.awareness.on('change', () => {
       const states = provider.awareness.getStates();
+
+      const activeClientIds = new Set([...states.keys()]);
+
+      /*
+        REMOVE STALE CURSOR DECORATIONS
+      */
+
+      Object.keys(decorationRef.current.cursor).forEach((clientId) => {
+        if (!activeClientIds.has(Number(clientId))) {
+          const oldDecorations = decorationRef.current.cursor[clientId];
+
+          editorRef.current.deltaDecorations(oldDecorations, []);
+
+          delete decorationRef.current.cursor[clientId];
+        }
+      });
+
+      /*
+        REMOVE STALE SELECTION DECORATIONS
+      */
+
+      Object.keys(decorationRef.current.selection).forEach((clientId) => {
+        if (!activeClientIds.has(Number(clientId))) {
+          const oldDecorations = decorationRef.current.selection[clientId];
+
+          editorRef.current.deltaDecorations(oldDecorations, []);
+
+          delete decorationRef.current.selection[clientId];
+        }
+      });
 
       states.forEach((state, clientId) => {
         //skip current user
@@ -177,6 +207,14 @@ const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
       );
     });
   }
+
+  useEffect(() => {
+    return () => {
+      awarenessRef.current?.setLocalState(null);
+
+      providerRef.current?.destroy();
+    };
+  }, []);
   return (
     <Editor
       height="100%"

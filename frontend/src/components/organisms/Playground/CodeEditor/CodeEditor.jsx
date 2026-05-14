@@ -5,7 +5,14 @@ import { useEffect, useRef } from 'react';
 import { MonacoBinding } from 'y-monaco';
 import * as Y from 'yjs';
 
-const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
+const CodeEditor = ({
+  code,
+  setCode,
+  setCurrentCode,
+  roomId,
+  editorRef,
+  monacoRef,
+}) => {
   const providerRef = useRef(null);
   const awarenessRef = useRef(null);
   const { user } = useUserStore();
@@ -188,6 +195,11 @@ const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
       });
     });
 
+    editor.onDidChangeModelContent(() => {
+      const updatedCode = editor.getValue();
+      setCurrentCode(updatedCode);
+    });
+
     //listen to cursor movement
     editor.onDidChangeCursorPosition((e) => {
       awarenessRef.current.setLocalStateField('cursor', {
@@ -218,7 +230,7 @@ const CodeEditor = ({ code, setCode, roomId, editorRef, monacoRef }) => {
   return (
     <Editor
       height="100%"
-      defaultLanguage="javascript"
+      defaultLanguage="python"
       theme="vs-dark"
       onMount={handleEditorDidMount}
       options={{

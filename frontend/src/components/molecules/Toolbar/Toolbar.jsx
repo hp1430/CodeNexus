@@ -1,7 +1,8 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
 import useUserStore from '@/hooks/store/useUserStore';
+import { Loader, Play } from 'lucide-react';
 
-const EditorToolbar = ({ roomId, users }) => {
+const EditorToolbar = ({ roomId, users, onRunClick, isExecutionPending }) => {
   const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
   const { user: signedInUser } = useUserStore();
   return (
@@ -19,6 +20,19 @@ const EditorToolbar = ({ roomId, users }) => {
             )
         )}
       </select>
+
+      <button
+        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 active:scale-95 transition-all duration-200 text-white font-medium shadow-md hover:shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-400"
+        onClick={onRunClick}
+        disabled={isExecutionPending}
+      >
+        {isExecutionPending ? (
+          <Loader size={18} />
+        ) : (
+          <Play size={18} className="fill-white" />
+        )}
+        {isExecutionPending ? <span>Running</span> : <span>Run</span>}
+      </button>
 
       <Button className="bg-blue-600 hover:bg-blue-700 text-white">
         Share

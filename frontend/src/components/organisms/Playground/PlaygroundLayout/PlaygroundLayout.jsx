@@ -3,6 +3,7 @@ import CodeEditor from '../CodeEditor/CodeEditor';
 import { ToolbarContainer } from '@/components/molecules/Toolbar/ToolbarContainer';
 import { useExecuteCode } from '@/hooks/apis/execution/useExecuteCode';
 import { Terminal } from '@/components/molecules/Terminal/Terminal';
+import { VideoCallSection } from '../../VideoCall/VideoCallSection/VideoCallSection';
 
 const PlaygroundLayout = ({
   roomId,
@@ -63,18 +64,21 @@ const PlaygroundLayout = ({
         onRunClick={handleRunClick}
         isExecutionPending={isPending}
       />
-
-      <div className="flex-1">
-        <CodeEditor
-          code={code}
-          setCode={setCode}
-          setCurrentCode={setCurrentCode}
-          roomId={roomId}
-          editorRef={editorRef}
-          monacoRef={monacoRef}
-        />
+      <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1">
+          <CodeEditor
+            code={code}
+            setCode={setCode}
+            setCurrentCode={setCurrentCode}
+            roomId={roomId}
+            editorRef={editorRef}
+            monacoRef={monacoRef}
+          />
+        </div>
+        <div className="w-[320px] border-r border-zinc-800 p-3 bg-zinc-900">
+          <VideoCallSection />
+        </div>
       </div>
-
       <Terminal
         output={output}
         validationError={validationError}

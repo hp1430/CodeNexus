@@ -6,8 +6,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { PlaygroundContainer } from './pages/Playground/PlaygroundContainer';
 import { ProtectedRoutes } from './routes/ProtectedRoutes';
 
+const queryClient = new QueryClient();
+
 function App() {
-  const queryClient = new QueryClient();
   return (
     <>
       <BrowserRouter>

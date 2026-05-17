@@ -42,6 +42,10 @@ export const VideoCallSection = () => {
 
           onIceCandidate: (socketId, candidate) => {
             console.log('ICE candidate generated:', socketId, candidate);
+            socket.emit('webrtc-ice-candidate', {
+              targetSocketId: socketId,
+              candidate,
+            });
           },
 
           onTrack: (socketId, remoteStream) => {
@@ -97,6 +101,10 @@ export const VideoCallSection = () => {
 
           onIceCandidate: (socketId, candidate) => {
             console.log('ICE candidate generated:', socketId, candidate);
+            socket.emit('webrtc-ice-candidate', {
+              targetSocketId: socketId,
+              candidate,
+            });
           },
 
           onTrack: (socketId, remoteStream) => {
@@ -144,6 +152,30 @@ export const VideoCallSection = () => {
 
     return () => {
       socket.off('webrtc-answer');
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on('webrtc-ice-candidate', async ({ candidate, senderSocketId }) => {
+      console.log('ICE candidate received from:', senderSocketId);
+
+      const peerConnection = peerConnectionsRef.current.get(senderSocketId);
+
+      if (!peerConnection) return;
+
+      try {
+        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+
+        console.log('ICE candidate added');
+      } catch (error) {
+        console.error('Error adding ICE candidate:', error);
+      }
+    });
+
+    return () => {
+      socket.off('webrtc-ice-candidate');
     };
   }, [socket]);
 

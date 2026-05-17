@@ -2,12 +2,12 @@ import { VideoPlayer } from '@/components/molecules/VideoCall/VideoPlayer/VideoP
 import { usePlaygroundStore } from '@/hooks/store/usePlaygroundStore';
 import { useLocalMedia } from '@/hooks/videoCall/useLocalMedia';
 import { createPeerConnection } from '@/service/peerConnectionManager';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const VideoCallSection = () => {
   const { stream, loading, error } = useLocalMedia();
   const peerConnectionsRef = useRef(new Map());
-  //const [remoteStreams, setRemoteStreams] = useState({});
+  const [remoteStreams, setRemoteStreams] = useState({});
 
   const { socket, users } = usePlaygroundStore();
 
@@ -30,6 +30,15 @@ export const VideoCallSection = () => {
 
         onIceCandidate: (socketId, candidate) => {
           console.log('ICE candidate generated:', socketId, candidate);
+        },
+
+        onTrack: (socketId, remoteStream) => {
+          console.log('Remote stream received:', socketId);
+
+          setRemoteStreams((prev) => ({
+            ...prev,
+            [socketId]: remoteStream,
+          }));
         },
       });
 

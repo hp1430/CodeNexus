@@ -77,4 +77,11 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       senderSocketId: socket.id
     });
   });
+
+  socket.on('webrtc-ice-candidate', ({ targetSocketId, candidate }) => {
+    io.to(targetSocketId).emit('webrtc-ice-candidate', {
+      candidate,
+      senderSocketId: socket.id
+    });
+  });
 };

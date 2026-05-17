@@ -4,6 +4,7 @@ import { useLocalMedia } from '@/hooks/videoCall/useLocalMedia';
 import {
   createPeerConnection,
   createOffer,
+  createAnswer,
 } from '@/service/peerConnectionManager';
 import { useEffect, useRef, useState } from 'react';
 
@@ -58,6 +59,11 @@ export const VideoCallSection = () => {
 
         const offer = await createOffer(peerConnection);
 
+        socket.emit('webrtc-offer', {
+          targetSocketId: user.socketId,
+          offer,
+        });
+
         console.log('Offer created:', offer);
       }
     };
@@ -72,6 +78,48 @@ export const VideoCallSection = () => {
       peerConnectionsRef.current.clear();
     };
   }, [users, stream, socket]);
+
+  useEffect(() => {
+    if (!socket || !stream) return;
+
+    socket.on('webrtc-offer', async ({ offer, senderSocketId }) => {
+      console.log('Offer received from:', senderSocketId);
+
+      let peerConnection = peerConnectionsRef.current.get(senderSocketId);
+
+      // Create PC if doesn't exist
+      if (!peerConnection) {
+        peerConnection = createPeerConnection({
+          socketId: senderSocketId,
+
+          localStream: stream,
+
+          onIceCandidate: (socketId, candidate) => {
+            console.log('ICE candidate generated:', socketId, candidate);
+          },
+
+          onTrack: (socketId, remoteStream) => {
+            console.log('Remote stream received:', socketId);
+
+            setRemoteStreams((prev) => ({
+              ...prev,
+              [socketId]: remoteStream,
+            }));
+          },
+        });
+
+        peerConnectionsRef.current.set(senderSocketId, peerConnection);
+      }
+
+      const answer = await createAnswer(peerConnection, offer);
+
+      console.log('Answer created:', answer);
+    });
+
+    return () => {
+      socket.off('webrtc-offer');
+    };
+  }, [socket, stream]);
 
   if (loading) {
     return <div className="text-white">Loading camera...</div>;

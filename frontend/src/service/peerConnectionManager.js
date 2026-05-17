@@ -38,3 +38,13 @@ export const createOffer = async (peerConnection) => {
 
   return offer;
 };
+
+export const createAnswer = async (peerConnection, offer) => {
+  await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+
+  const answer = await peerConnection.createAnswer();
+
+  await peerConnection.setLocalDescription(answer);
+
+  return answer;
+};

@@ -3,9 +3,13 @@ import roomRepository from '../../repositories/roomRepository.js';
 export const playgroundEventHandler = (io, socket, rooms) => {
   // Join Room Event
   socket.on('join-room', async ({ roomId, user }) => {
+    const userData = {
+      ...user,
+      socketId: socket.id
+    };
     socket.join(roomId);
-    socket.user = user; // Attach user info to socket for later use
-    socket.to(roomId).emit('user-joined', { user });
+    socket.user = userData; // Attach user info to socket for later use
+    socket.to(roomId).emit('user-joined', { user: userData });
 
     if (!rooms[roomId]) {
       const room = await roomRepository.getRoomByRoomId(roomId);
@@ -15,7 +19,7 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       };
     }
 
-    rooms[roomId].users.push(user);
+    rooms[roomId].users.push(userData);
 
     // Send existing code to the newly joined client
     //socket.emit('init-code', { code: rooms[roomId].code });

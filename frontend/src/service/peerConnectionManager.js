@@ -48,3 +48,7 @@ export const createAnswer = async (peerConnection, offer) => {
 
   return answer;
 };
+
+export const addAnswer = async (peerConnection, answer) => {
+  await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+};

@@ -5,6 +5,7 @@ import {
   createPeerConnection,
   createOffer,
   createAnswer,
+  addAnswer,
 } from '@/service/peerConnectionManager';
 import { useEffect, useRef, useState } from 'react';
 
@@ -113,6 +114,11 @@ export const VideoCallSection = () => {
 
       const answer = await createAnswer(peerConnection, offer);
 
+      socket.emit('webrtc-answer', {
+        targetSocketId: senderSocketId,
+        answer,
+      });
+
       console.log('Answer created:', answer);
     });
 
@@ -120,6 +126,26 @@ export const VideoCallSection = () => {
       socket.off('webrtc-offer');
     };
   }, [socket, stream]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on('webrtc-answer', async ({ answer, senderSocketId }) => {
+      console.log('Answer received from:', senderSocketId);
+
+      const peerConnection = peerConnectionsRef.current.get(senderSocketId);
+
+      if (!peerConnection) return;
+
+      await addAnswer(peerConnection, answer);
+
+      console.log('Remote description set');
+    });
+
+    return () => {
+      socket.off('webrtc-answer');
+    };
+  }, [socket]);
 
   if (loading) {
     return <div className="text-white">Loading camera...</div>;

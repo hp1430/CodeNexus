@@ -1,12 +1,21 @@
 import { VideoPlayer } from '@/components/molecules/VideoCall/VideoPlayer/VideoPlayer';
 import { usePlaygroundStore } from '@/hooks/store/usePlaygroundStore';
 import { useLocalMedia } from '@/hooks/videoCall/useLocalMedia';
-import { createPeerConnection } from '@/service/peerConnectionManager';
+import {
+  createPeerConnection,
+  createOffer,
+} from '@/service/peerConnectionManager';
 import { useEffect, useRef, useState } from 'react';
 
 export const VideoCallSection = () => {
   const { stream, loading, error } = useLocalMedia();
+
+  // Stores:
+  // socketId => RTCPeerConnection
   const peerConnectionsRef = useRef(new Map());
+
+  // Stores:
+  // socketId => MediaStream
   const [remoteStreams, setRemoteStreams] = useState({});
 
   const { socket, users } = usePlaygroundStore();
@@ -14,38 +23,46 @@ export const VideoCallSection = () => {
   useEffect(() => {
     if (!stream || !users?.length || !socket) return;
 
-    users.forEach((user) => {
-      // Skip self
-      if (user.socketId === socket.id) return;
+    const setupConnections = async () => {
+      for (const user of users) {
+        // Skip self
+        if (user.socketId === socket.id) continue;
 
-      // Prevent duplicates
-      if (peerConnectionsRef.current.has(user.socketId)) {
-        return;
+        // Prevent duplicate peer connections
+        if (peerConnectionsRef.current.has(user.socketId)) {
+          continue;
+        }
+
+        const peerConnection = createPeerConnection({
+          socketId: user.socketId,
+
+          localStream: stream,
+
+          onIceCandidate: (socketId, candidate) => {
+            console.log('ICE candidate generated:', socketId, candidate);
+          },
+
+          onTrack: (socketId, remoteStream) => {
+            console.log('Remote stream received:', socketId);
+
+            setRemoteStreams((prev) => ({
+              ...prev,
+              [socketId]: remoteStream,
+            }));
+          },
+        });
+
+        peerConnectionsRef.current.set(user.socketId, peerConnection);
+
+        console.log('Peer connection created for:', user.socketId);
+
+        const offer = await createOffer(peerConnection);
+
+        console.log('Offer created:', offer);
       }
+    };
 
-      const peerConnection = createPeerConnection({
-        socketId: user.socketId,
-
-        localStream: stream,
-
-        onIceCandidate: (socketId, candidate) => {
-          console.log('ICE candidate generated:', socketId, candidate);
-        },
-
-        onTrack: (socketId, remoteStream) => {
-          console.log('Remote stream received:', socketId);
-
-          setRemoteStreams((prev) => ({
-            ...prev,
-            [socketId]: remoteStream,
-          }));
-        },
-      });
-
-      peerConnectionsRef.current.set(user.socketId, peerConnection);
-
-      console.log('Peer connection created for:', user.socketId);
-    });
+    setupConnections();
 
     return () => {
       peerConnectionsRef.current.forEach((peerConnection) => {
@@ -66,10 +83,22 @@ export const VideoCallSection = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Local Video */}
       <div className="aspect-video rounded-xl overflow-hidden bg-black">
         <VideoPlayer stream={stream} muted />
       </div>
+
       <div className="text-sm text-zinc-400">Local Preview</div>
+
+      {/* Remote Videos */}
+      {Object.entries(remoteStreams).map(([socketId, remoteStream]) => (
+        <div
+          key={socketId}
+          className="aspect-video rounded-xl overflow-hidden bg-black"
+        >
+          <VideoPlayer stream={remoteStream} />
+        </div>
+      ))}
     </div>
   );
 };

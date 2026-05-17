@@ -30,3 +30,11 @@ export const createPeerConnection = ({
 
   return peerConnection;
 };
+
+export const createOffer = async (peerConnection) => {
+  const offer = await peerConnection.createOffer();
+
+  await peerConnection.setLocalDescription(offer);
+
+  return offer;
+};

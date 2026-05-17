@@ -1,8 +1,10 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
+import { usePlaygroundStore } from '@/hooks/store/usePlaygroundStore';
 import useUserStore from '@/hooks/store/useUserStore';
 import { Loader, Play } from 'lucide-react';
 
-const EditorToolbar = ({ roomId, users, onRunClick, isExecutionPending }) => {
+const EditorToolbar = ({ roomId, onRunClick, isExecutionPending }) => {
+  const { users } = usePlaygroundStore();
   const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
   const { user: signedInUser } = useUserStore();
   return (

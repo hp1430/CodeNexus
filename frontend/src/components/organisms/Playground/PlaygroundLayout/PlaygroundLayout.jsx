@@ -5,14 +5,7 @@ import { useExecuteCode } from '@/hooks/apis/execution/useExecuteCode';
 import { Terminal } from '@/components/molecules/Terminal/Terminal';
 import { VideoCallSection } from '../../VideoCall/VideoCallSection/VideoCallSection';
 
-const PlaygroundLayout = ({
-  roomId,
-  code,
-  setCode,
-  users,
-  editorRef,
-  monacoRef,
-}) => {
+const PlaygroundLayout = ({ roomId, code, setCode, editorRef, monacoRef }) => {
   const [currentCode, setCurrentCode] = useState('');
   const { isPending, codeExecutionMutation } = useExecuteCode();
   const [validationError, setValidationError] = useState(null);
@@ -59,7 +52,6 @@ const PlaygroundLayout = ({
     <div className="h-screen flex flex-col">
       <ToolbarContainer
         roomId={roomId}
-        users={users}
         currentCode={currentCode}
         onRunClick={handleRunClick}
         isExecutionPending={isPending}

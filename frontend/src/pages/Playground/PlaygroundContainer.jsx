@@ -5,13 +5,14 @@ import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
 import { socket } from '@/configs/socketConfig';
 import { playgroundSocketHandler } from '@/lib/playgroundSocketHandler';
 import useUserStore from '@/hooks/store/useUserStore';
+import { usePlaygroundStore } from '@/hooks/store/usePlaygroundStore';
 
 export const PlaygroundContainer = () => {
   const { roomId } = useParams();
   const [code, setCode] = useState('');
-  const [users, setUsers] = useState([]);
   const { user } = useUserStore();
   const { joinRoomMutation } = useJoinRoom();
+  const { setSocket, setUsers } = usePlaygroundStore();
 
   const editorRef = useRef(null);
   const decorationRef = useRef({
@@ -39,6 +40,7 @@ export const PlaygroundContainer = () => {
     socket.connect();
 
     socket.on('connect', () => {
+      setSocket(socket);
       socket.emit('join-room', {
         roomId,
         user: { id: user._id, name: user.name },
@@ -62,9 +64,10 @@ export const PlaygroundContainer = () => {
     return () => {
       socket.off('connect');
       socket.off('disconnect');
+      setSocket(null);
       socket.disconnect();
     };
-  }, [roomId, user]);
+  }, [roomId, user, setSocket, setUsers]);
 
   function handleCodeChange(newCode) {
     setCode(newCode);
@@ -75,7 +78,6 @@ export const PlaygroundContainer = () => {
       roomId={roomId}
       code={code}
       setCode={handleCodeChange}
-      users={users}
       editorRef={editorRef}
       monacoRef={monacoRef}
     />

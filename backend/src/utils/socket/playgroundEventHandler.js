@@ -70,4 +70,11 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       senderSocketId: socket.id
     });
   });
+
+  socket.on('webrtc-answer', ({ targetSocketId, answer }) => {
+    io.to(targetSocketId).emit('webrtc-answer', {
+      answer,
+      senderSocketId: socket.id
+    });
+  });
 };

@@ -63,4 +63,11 @@ export const playgroundEventHandler = (io, socket, rooms) => {
       selection
     });
   });
+
+  socket.on('webrtc-offer', ({ targetSocketId, offer }) => {
+    io.to(targetSocketId).emit('webrtc-offer', {
+      offer,
+      senderSocketId: socket.id
+    });
+  });
 };

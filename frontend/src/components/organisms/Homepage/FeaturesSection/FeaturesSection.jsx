@@ -17,13 +17,12 @@ export default function Features() {
     {
       icon: '🎥',
       title: 'Video Interviewing',
-      description:
-        'Keep the conversation flowing with built-in video and screenshare.',
+      description: 'Keep the conversation flowing with built-in video.',
     },
   ];
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
+    <section className="mx-auto max-w-7xl px-6 py-0 sm:px-8">
       <div className="grid gap-6 md:grid-cols-3">
         {features.map((f, i) => (
           <FeatureCard key={i} {...f} />

@@ -1,20 +1,5 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
 
-const highlights = [
-  {
-    title: 'Live Code Collaboration',
-    desc: 'Pair program in real time with synchronized editing and instant feedback.',
-  },
-  {
-    title: 'Instant Execution',
-    desc: 'Run solutions and inspect outputs without leaving the interview flow.',
-  },
-  {
-    title: 'HD Video Calls',
-    desc: 'Keep interviews fluid with built-in video and screen sharing.',
-  },
-];
-
 export default function Hero({
   onCreateRoom,
   isCreatingRoom,
@@ -55,22 +40,6 @@ export default function Hero({
           >
             Join Room
           </Button>
-        </div>
-
-        <div className="mt-14 grid gap-4 sm:grid-cols-3">
-          {highlights.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-3xl border border-white/10 bg-slate-900/85 p-6 shadow-[0_35px_60px_-40px_rgba(15,23,42,0.75)] transition hover:-translate-y-1"
-            >
-              <h3 className="text-base font-semibold text-cyan-300">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
-                {item.desc}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

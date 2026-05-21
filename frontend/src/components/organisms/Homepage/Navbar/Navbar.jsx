@@ -14,32 +14,34 @@ export default function Navbar({ onLoginClick, isLoggedIn }) {
     }, 1500);
   }
   return (
-    <nav className="flex justify-between items-center px-8 py-4">
-      <img src={logo} className="h-20 w-auto" />
-      <div className="flex gap-4">
-        {loading && (
-          <Button variant="outline" className="cursor-not-allowed" disabled>
-            Logging out...
-          </Button>
-        )}
-        {isLoggedIn && !loading && (
-          <Button
-            onClick={handleLogoutClick}
-            variant="outline"
-            className="cursor-pointer"
-          >
-            Logout
-          </Button>
-        )}
-        {!isLoggedIn && !loading && (
-          <Button
-            onClick={onLoginClick}
-            variant="outline"
-            className="cursor-pointer"
-          >
-            Login
-          </Button>
-        )}
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 px-8 py-4 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <img src={logo} className="h-16 w-auto" />
+        <div className="flex items-center gap-3">
+          {loading && (
+            <Button variant="outline" className="cursor-not-allowed" disabled>
+              Logging out...
+            </Button>
+          )}
+          {isLoggedIn && !loading && (
+            <Button
+              onClick={handleLogoutClick}
+              variant="outline"
+              className="cursor-pointer"
+            >
+              Logout
+            </Button>
+          )}
+          {!isLoggedIn && !loading && (
+            <Button
+              onClick={onLoginClick}
+              variant="outline"
+              className="cursor-pointer"
+            >
+              Login
+            </Button>
+          )}
+        </div>
       </div>
     </nav>
   );

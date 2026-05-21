@@ -23,12 +23,15 @@ export default function HomePage({
   setJoinRoomDialogOpen,
 }) {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-slate-950 text-white min-h-screen">
       <Navbar onLoginClick={onLoginClick} isLoggedIn={isLoggedIn} />
-      <HeroSectionContainer
-        setLoginDialogOpen={onLoginDialogOpenChange}
-        setJoinRoomDialogOpen={setJoinRoomDialogOpen}
-      />
+      <main className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-linear-to-b from-cyan-500/15 to-transparent" />
+        <HeroSectionContainer
+          setLoginDialogOpen={onLoginDialogOpenChange}
+          setJoinRoomDialogOpen={setJoinRoomDialogOpen}
+        />
+      </main>
       <Features />
       <CTA />
       {isLoginDialogOpen && (

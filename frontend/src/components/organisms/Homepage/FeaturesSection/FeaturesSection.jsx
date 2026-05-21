@@ -5,25 +5,30 @@ export default function Features() {
     {
       icon: '💻',
       title: 'Live Coding',
-      description: 'Real-time collaborative coding environment',
+      description:
+        'Work together in a synced editor with instant collaboration.',
     },
     {
-      icon: '🤖',
-      title: 'AI Feedback',
-      description: 'Get instant evaluation of your performance',
+      icon: '⚡',
+      title: 'Execute Instantly',
+      description:
+        'Compile and run code while you interview, without context switches.',
     },
     {
-      icon: '🌐',
-      title: 'Remote Interviews',
-      description: 'Conduct interviews from anywhere',
+      icon: '🎥',
+      title: 'Video Interviewing',
+      description:
+        'Keep the conversation flowing with built-in video and screenshare.',
     },
   ];
 
   return (
-    <section className="py-16 px-8 grid md:grid-cols-3 gap-6">
-      {features.map((f, i) => (
-        <FeatureCard key={i} {...f} />
-      ))}
+    <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
+      <div className="grid gap-6 md:grid-cols-3">
+        {features.map((f, i) => (
+          <FeatureCard key={i} {...f} />
+        ))}
+      </div>
     </section>
   );
 }

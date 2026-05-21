@@ -1,5 +1,6 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
 import useUserStore from '@/hooks/store/useUserStore';
+import logo from '@/assets/logo.png';
 import { useState } from 'react';
 
 export default function Navbar({ onLoginClick, isLoggedIn }) {
@@ -14,7 +15,7 @@ export default function Navbar({ onLoginClick, isLoggedIn }) {
   }
   return (
     <nav className="flex justify-between items-center px-8 py-4">
-      <h1 className="text-2xl font-bold">CodeNexus</h1>
+      <img src={logo} className="h-20 w-auto" />
       <div className="flex gap-4">
         {loading && (
           <Button variant="outline" className="cursor-not-allowed" disabled>

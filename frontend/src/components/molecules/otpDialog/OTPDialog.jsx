@@ -51,31 +51,33 @@ export const OTPDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm rounded-[2rem] border border-white/10 bg-slate-950/95 p-6 shadow-2xl shadow-cyan-500/20 ring-1 ring-white/10 backdrop-blur-xl">
         <form onSubmit={onSubmit}>
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+          <DialogHeader className="gap-3 pb-3 border-b border-white/10">
+            <DialogTitle className="text-2xl text-white">{title}</DialogTitle>
+            <DialogDescription className="text-slate-400">
+              {description}
+            </DialogDescription>
           </DialogHeader>
 
           <br />
 
           {validationError && (
-            <div className="bg-destructive/15 p-4 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
-              <TriangleAlert className="size-5" />
+            <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-center gap-x-2 text-sm text-red-200 mb-6">
+              <TriangleAlert className="size-5 text-red-300" />
               <p>{validationError.message}</p>
             </div>
           )}
 
           {error && (
-            <div className="bg-destructive/15 p-4 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
-              <TriangleAlert className="size-5" />
+            <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-center gap-x-2 text-sm text-red-200 mb-6">
+              <TriangleAlert className="size-5 text-red-300" />
               <p>{error.message}</p>
             </div>
           )}
 
           {isSuccess && (
-            <div className="bg-green-100 border border-green-300 p-3 rounded-md flex items-center gap-x-2 text-sm text-green-800 mb-5">
+            <div className="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-2xl flex items-center gap-x-2 text-sm text-emerald-200 mb-5">
               <p>
                 OTP verified successfully. Login after closing the dialog.
                 <LucideLoader2 className="animate-spin ml-2" />
@@ -100,7 +102,7 @@ export const OTPDialog = ({
                       disabled={isPending}
                       onChange={(e) => handleChange(e.target.value, index)}
                       onKeyDown={(e) => handleBackspace(e, index)}
-                      className="w-10 h-12 text-center text-lg border-gray-950"
+                      className="w-10 h-12 text-center text-lg border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:border-cyan-300 focus:ring-cyan-300"
                     />
                   ))}
               </div>
@@ -109,7 +111,7 @@ export const OTPDialog = ({
 
           <br />
 
-          <DialogFooter>
+          <DialogFooter className="bg-slate-950/80 border-white/10">
             <DialogClose asChild>
               <Button
                 type="button"
@@ -122,7 +124,7 @@ export const OTPDialog = ({
             </DialogClose>
             <Button
               type="submit"
-              className="cursor-pointer bg-blue-600"
+              className="cursor-pointer bg-cyan-500 text-slate-950 hover:bg-cyan-400"
               disabled={isPending}
             >
               Verify

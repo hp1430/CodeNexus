@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import Button from '@/components/atoms/Homepage/Button/Button';
+import InviteDialog from '@/components/molecules/InviteDialog/InviteDialog';
 import { usePlaygroundStore } from '@/hooks/store/usePlaygroundStore';
 import useUserStore from '@/hooks/store/useUserStore';
 import { Loader, Play } from 'lucide-react';
 
 const EditorToolbar = ({ roomId, onRunClick, isExecutionPending }) => {
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const { users } = usePlaygroundStore();
   const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
   const { user: signedInUser } = useUserStore();
@@ -36,9 +39,18 @@ const EditorToolbar = ({ roomId, onRunClick, isExecutionPending }) => {
         {isExecutionPending ? <span>Running</span> : <span>Run</span>}
       </button>
 
-      <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-        Share
+      <Button
+        className="bg-blue-600 hover:bg-blue-700 text-white"
+        onClick={() => setIsInviteOpen(true)}
+      >
+        Invite
       </Button>
+
+      <InviteDialog
+        isOpen={isInviteOpen}
+        onOpenChange={setIsInviteOpen}
+        roomId={roomId}
+      />
     </div>
   );
 };

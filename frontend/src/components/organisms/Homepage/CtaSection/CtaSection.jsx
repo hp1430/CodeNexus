@@ -4,9 +4,9 @@ export default function CTA() {
   return (
     <section className="py-20 px-6 sm:px-10">
       <div className="mx-auto max-w-4xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-linear-to-r from-slate-900/95 via-slate-950 to-slate-900/90 p-10 shadow-2xl shadow-cyan-500/10">
-        <div className="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
+        <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:text-left lg:items-center lg:justify-center">
           <div>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl pl-20">
               Ready to own your next interview?
             </h2>
             <p className="mt-4 text-slate-400">
@@ -14,9 +14,7 @@ export default function CTA() {
               a polished, interview-ready workspace.
             </p>
           </div>
-          <Button variant="primary" className="w-full max-w-xs">
-            Get Started
-          </Button>
+          {/* button intentionally removed to simplify CTA */}
         </div>
         <div className="mt-6 border-t border-white/6 pt-6 text-center">
           <p className="text-sm text-slate-400 flex items-center justify-center gap-2">

@@ -216,40 +216,53 @@ export const VideoCallSection = () => {
   }
 
   return (
-    <div className="group relative aspect-video rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-lg">
-      <VideoPlayer stream={stream} muted />
+    <div className="flex flex-col gap-4">
+      {/* Local Video */}
+      <div className="group relative aspect-video rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-lg">
+        <VideoPlayer stream={stream} muted />
 
-      {/* Gradient Overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
+        {/* Gradient Overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
 
-      {/* Controls */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
-        {/* Mic Button */}
-        <button
-          onClick={toggleMute}
-          className={`flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-200 shadow-lg hover:scale-105 active:scale-95
-      ${
-        isMuted
-          ? 'bg-red-500/90 border-red-400 text-white'
-          : 'bg-zinc-900/70 border-zinc-700 text-white hover:bg-zinc-800'
-      }`}
-        >
-          {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
-        </button>
+        {/* Controls */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
+          {/* Mic Button */}
+          <button
+            onClick={toggleMute}
+            className={`flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-200 shadow-lg hover:scale-105 active:scale-95
+          ${
+            isMuted
+              ? 'bg-red-500/90 border-red-400 text-white'
+              : 'bg-zinc-900/70 border-zinc-700 text-white hover:bg-zinc-800'
+          }`}
+          >
+            {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
+          </button>
 
-        {/* Camera Button */}
-        <button
-          onClick={toggleVideo}
-          className={`flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-200 shadow-lg hover:scale-105 active:scale-95
-      ${
-        isVideoOff
-          ? 'bg-red-500/90 border-red-400 text-white'
-          : 'bg-zinc-900/70 border-zinc-700 text-white hover:bg-zinc-800'
-      }`}
-        >
-          {isVideoOff ? <VideoOff size={20} /> : <Video size={20} />}
-        </button>
+          {/* Camera Button */}
+          <button
+            onClick={toggleVideo}
+            className={`flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-200 shadow-lg hover:scale-105 active:scale-95
+          ${
+            isVideoOff
+              ? 'bg-red-500/90 border-red-400 text-white'
+              : 'bg-zinc-900/70 border-zinc-700 text-white hover:bg-zinc-800'
+          }`}
+          >
+            {isVideoOff ? <VideoOff size={20} /> : <Video size={20} />}
+          </button>
+        </div>
       </div>
+
+      {/* Remote Videos */}
+      {Object.entries(remoteStreams).map(([socketId, remoteStream]) => (
+        <div
+          key={socketId}
+          className="aspect-video rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-lg"
+        >
+          <VideoPlayer stream={remoteStream} />
+        </div>
+      ))}
     </div>
   );
 };

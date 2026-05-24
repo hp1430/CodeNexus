@@ -1,7 +1,7 @@
 import { useJoinRoom } from '@/hooks/apis/room/useJoinRoom';
-import { OTPDialog } from '../otpDialog/OTPDialog';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { OTPDialog } from '../otpDialog/OTPDialog';
 
 export const JoinRoomDialogContainer = ({ open, onOpenChange }) => {
   const [otpForm, setOtpForm] = useState({ otp: '' });

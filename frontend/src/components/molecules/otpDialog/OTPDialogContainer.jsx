@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { OTPDialog } from './otpDialog';
 import { useVerifyOtp } from '@/hooks/apis/auth/useVerifyOtp';
+import { OTPDialog } from './OTPDialog';
 
 export const OTPDialogContainer = ({ open, onOpenChange }) => {
   const [otpForm, setOtpForm] = useState({ otp: '' });

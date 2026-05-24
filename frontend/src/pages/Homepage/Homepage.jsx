@@ -1,6 +1,6 @@
 import { JoinRoomDialogContainer } from '@/components/molecules/JoinRoomDialog/JoinRoomDialogContainer';
 import { LoginDialogContainer } from '@/components/molecules/LoginDialog/LoginDialogContainer';
-import { OTPDialogContainer } from '@/components/molecules/otpDialog/otpDialogContainer';
+import { OTPDialogContainer } from '@/components/molecules/otpDialog/OtpDialogContainer';
 import { SignupDialogContainer } from '@/components/molecules/SignupDialog/SignupDialogContainer';
 import CTA from '@/components/organisms/Homepage/CtaSection/CtaSection';
 import Features from '@/components/organisms/Homepage/FeaturesSection/FeaturesSection';

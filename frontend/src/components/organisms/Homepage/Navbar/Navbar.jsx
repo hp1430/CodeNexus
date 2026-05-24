@@ -1,6 +1,6 @@
 import Button from '@/components/atoms/Homepage/Button/Button';
 import useUserStore from '@/hooks/store/useUserStore';
-import logo from '@/assets/logo2.PNG';
+import logo from '@/assets/Logo2.PNG';
 import { useState } from 'react';
 
 export default function Navbar({ onLoginClick, isLoggedIn }) {

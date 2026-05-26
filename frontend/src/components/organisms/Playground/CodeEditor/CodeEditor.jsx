@@ -209,14 +209,33 @@ const CodeEditor = ({
     });
 
     editor.onDidChangeCursorSelection((e) => {
-      awarenessRef.current.setLocalStateField(
-        'selection',
-        MonacoBinding.monacoSelectionToRelativeSelection(
-          e.selection,
-          editor.getModel(),
-          provider.doc
-        )
-      );
+      const model = editor.getModel();
+
+      /*
+        CONVERT MONACO POSITIONS
+        -> ABSOLUTE OFFSETS
+      */
+
+      const startOffset = model.getOffsetAt({
+        lineNumber: e.selection.startLineNumber,
+        column: e.selection.startColumn,
+      });
+
+      const endOffset = model.getOffsetAt({
+        lineNumber: e.selection.endLineNumber,
+        column: e.selection.endColumn,
+      });
+
+      /*
+    CONVERT ABSOLUTE OFFSETS
+    -> YJS RELATIVE POSITIONS
+  */
+
+      awarenessRef.current.setLocalStateField('selection', {
+        anchor: Y.createRelativePositionFromTypeIndex(yText, startOffset),
+
+        head: Y.createRelativePositionFromTypeIndex(yText, endOffset),
+      });
     });
   }
 

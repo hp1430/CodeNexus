@@ -15,6 +15,7 @@ const CodeEditor = ({
 }) => {
   const providerRef = useRef(null);
   const awarenessRef = useRef(null);
+  const yDocRef = useRef(null);
   const { user } = useUserStore();
 
   const decorationRef = useRef({
@@ -23,13 +24,17 @@ const CodeEditor = ({
   });
 
   function handleEditorDidMount(editor, monaco) {
+    if (providerRef.current) {
+      providerRef.current.destroy();
+    }
     editorRef.current = editor;
     monacoRef.current = monaco;
 
-    const { yText, provider } = createYjsProvider(roomId);
+    const { yText, provider, yDoc } = createYjsProvider(roomId);
 
     providerRef.current = provider;
     awarenessRef.current = provider.awareness;
+    yDocRef.current = yDoc;
 
     new MonacoBinding(
       yText,
@@ -244,6 +249,8 @@ const CodeEditor = ({
       awarenessRef.current?.setLocalState(null);
 
       providerRef.current?.destroy();
+
+      yDocRef.current?.destroy();
     };
   }, []);
   return (

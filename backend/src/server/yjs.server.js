@@ -13,11 +13,19 @@ initializeYjsPersistence();
 const server = http.createServer();
 
 const wss = new WebSocketServer({
-  server
+  server,
+  perMessageDeflate: false,
+  clientTracking: true
 });
 
 wss.on('connection', (ws, req) => {
   console.log('client connected to ws server');
+  console.log(req.url);
+  console.log(req.headers.origin);
+
+  ws.on('error', (err) => {
+    console.log('WS ERROR:', err);
+  });
 
   setupWSConnection(ws, req);
 });

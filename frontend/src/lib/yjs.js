@@ -35,23 +35,6 @@ export const createYjsProvider = (roomId) => {
     console.log('YJS SYNC STATUS:', isSynced);
   });
 
-  // raw websocket debug
-  provider.ws.addEventListener('open', () => {
-    console.log('RAW WS OPEN');
-  });
-
-  provider.ws.addEventListener('close', (event) => {
-    console.log('RAW WS CLOSED:', event);
-  });
-
-  provider.ws.addEventListener('error', (event) => {
-    console.log('RAW WS ERROR:', event);
-  });
-
-  provider.ws.addEventListener('message', (event) => {
-    console.log('RAW WS MESSAGE:', event.data);
-  });
-
   // shared text
   const yText = ydoc.getText('monaco');
 

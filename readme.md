@@ -329,7 +329,7 @@ npm run dev
 OR
 
 ```bash
-node src/server.js
+node src/index.js
 ```
 
 Backend runs on:
@@ -371,7 +371,7 @@ cd backend
 Run:
 
 ```bash
-node src/ws/yjsServer.js
+node src/server/yjs.index.js
 ```
 
 YJS server runs on:
@@ -548,7 +548,7 @@ sudo docker run -dit --name python-sandbox code-executor-python sh
 ## Start backend server
 
 ```bash
-pm2 start src/server.js --name backend
+pm2 start src/index.js --name backend
 ```
 
 ## Start email worker
@@ -560,7 +560,7 @@ pm2 start src/workers/emailWorker.js --name email-worker
 ## Start YJS server
 
 ```bash
-pm2 start src/ws/yjsServer.js --name yjs-server
+pm2 start src/server/yjs.server.js --name yjs-server
 ```
 
 ---
